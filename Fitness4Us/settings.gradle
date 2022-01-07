@@ -1,1 +1,3 @@
 rootProject.name = 'Fitness4Us'
+
+includeFlat 'JPAFitness'
