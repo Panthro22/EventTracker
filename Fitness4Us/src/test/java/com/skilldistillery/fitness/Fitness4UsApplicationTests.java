@@ -1,4 +1,4 @@
-package com.skilldistillery.fitness.entities;
+package com.skilldistillery.fitness;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
