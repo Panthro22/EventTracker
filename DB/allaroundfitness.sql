@@ -22,9 +22,9 @@ DROP TABLE IF EXISTS `User` ;
 
 CREATE TABLE IF NOT EXISTS `User` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `first_name` VARCHAR(45) NULL,
-  `last_name` VARCHAR(45) NULL,
-  `email` VARCHAR(45) NULL,
+  `first_name` VARCHAR(55) NULL,
+  `last_name` VARCHAR(55) NULL,
+  `email` VARCHAR(255) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
@@ -52,3 +52,13 @@ GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE * TO 'fitnesspal'@'localh
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `User`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `allroundfitness`;
+INSERT INTO `User` (`id`, `first_name`, `last_name`, `email`) VALUES (1, 'Jordon', 'Paynter', 'jordonpaynter22@gmail.com');
+
+COMMIT;
+
