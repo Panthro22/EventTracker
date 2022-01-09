@@ -5,6 +5,7 @@
 	</provider>
 	<class>com.skilldistillery.fitness.entities.DailyLogEntries</class>
 	<class>com.skilldistillery.fitness.entities.User</class>
+	<class>com.skilldistillery.fitness.entities.Workout</class>
 	
 
 	<properties>
