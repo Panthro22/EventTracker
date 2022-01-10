@@ -31,8 +31,16 @@ public class CardioTraining {
 	@JoinColumn(name="cardio_excercise_id")
 	private CardioExcercise cardioExcercise;
 	
-	
-	
+	public CardioTraining() {
+		super();
+	}
+	public CardioTraining(int id, String name, double distance, String scale) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.distance = distance;
+		this.scale = scale;
+	}
 	public int getId() {
 		return id;
 	}

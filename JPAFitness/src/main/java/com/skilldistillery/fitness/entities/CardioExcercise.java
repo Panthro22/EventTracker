@@ -28,6 +28,15 @@ public class CardioExcercise {
 	private List<Images> images;
 	@OneToMany(mappedBy="cardioExcercise")
 	private List<Video> video;
+	
+	public CardioExcercise() {
+		super();
+	}
+	public CardioExcercise(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
 	public int getId() {
 		return id;
 	}

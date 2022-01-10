@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS `daily_log_entries` ;
 CREATE TABLE IF NOT EXISTS `daily_log_entries` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `time_recorded` DATETIME NULL,
-  `user_id` INT NOT NULL,
+  `user_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_log_entries_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_log_entries_user`
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `workout` (
   `id` INT NOT NULL,
   `start_time` DATETIME NULL,
   `end_time` DATETIME NULL,
-  `daily_log_entries_id` INT NOT NULL,
+  `daily_log_entries_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_workout_daily_log_entries1_idx` (`daily_log_entries_id` ASC),
   CONSTRAINT `fk_workout_daily_log_entries1`
@@ -94,8 +94,9 @@ DROP TABLE IF EXISTS `cardio_excercise` ;
 
 CREATE TABLE IF NOT EXISTS `cardio_excercise` (
   `id` INT NOT NULL,
-  `name` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
 
 
@@ -106,7 +107,7 @@ DROP TABLE IF EXISTS `images` ;
 
 CREATE TABLE IF NOT EXISTS `images` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `desription` VARCHAR(45) NULL,
+  `description` VARCHAR(45) NULL,
   `url` TEXT NULL,
   `title` VARCHAR(45) NULL,
   `weight_excercise_id` INT NULL,
@@ -168,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `weight_training` (
   `weight` DECIMAL(6,2) NULL,
   `scale` VARCHAR(3) NULL,
   `weight_excercise_id` INT NOT NULL,
-  `workout_id` INT NOT NULL,
+  `workout_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_weight_training_weight_excercise1_idx` (`weight_excercise_id` ASC),
   INDEX `fk_weight_training_workout1_idx` (`workout_id` ASC),
@@ -286,8 +287,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `allroundfitness`;
-INSERT INTO `images` (`id`, `desription`, `url`, `title`, `weight_excercise_id`, `cardio_excercise_id`) VALUES (1, 'Test Image Description', NULL, 'Test image', 1, NULL);
-INSERT INTO `images` (`id`, `desription`, `url`, `title`, `weight_excercise_id`, `cardio_excercise_id`) VALUES (2, 'test cardio decs', NULL, 'test cardio', NULL, 1);
+INSERT INTO `images` (`id`, `description`, `url`, `title`, `weight_excercise_id`, `cardio_excercise_id`) VALUES (1, 'Test Image Description', NULL, 'Test image', 1, NULL);
+INSERT INTO `images` (`id`, `description`, `url`, `title`, `weight_excercise_id`, `cardio_excercise_id`) VALUES (2, 'test cardio decs', NULL, 'test cardio', NULL, 1);
 
 COMMIT;
 

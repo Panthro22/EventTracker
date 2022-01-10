@@ -34,6 +34,19 @@ public class WeightTraining {
 	@JoinColumn(name="weight_excercise_id")
 	private WeightExcercise weightExcercise;
 	
+	
+	public WeightTraining() {
+		super();
+	}
+	public WeightTraining(int id, String name, int repetitions, int sets, double weight, String scale) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.repetitions = repetitions;
+		this.sets = sets;
+		this.weight = weight;
+		this.scale = scale;
+	}
 	public int getId() {
 		return id;
 	}

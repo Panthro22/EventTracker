@@ -28,6 +28,17 @@ public class Video {
 	@ManyToOne
 	@JoinColumn(name="cardio_excercise_id")
 	private CardioExcercise cardioExcercise;
+	
+	public Video() {
+		super();
+	}
+	public Video(int id, String title, String description, String url) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.url = url;
+	}
 	public int getId() {
 		return id;
 	}

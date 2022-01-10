@@ -36,6 +36,18 @@ public class Workout {
 	@OneToMany(mappedBy="workout")
 	private List<CardioTraining> cardioTraining;
 	
+	
+	public Workout() {
+		super();
+	}
+
+	public Workout(int id, LocalDateTime startTime, LocalDateTime endTime) {
+		super();
+		this.id = id;
+		this.startTime = startTime;
+		this.endTime = endTime;
+	}
+
 	public int getId() {
 		return id;
 	}
