@@ -31,4 +31,14 @@ public class UserServiceImpl implements UserService {
 		return userRepo.saveAndFlush(user);
 	}
 
+	@Override
+	public User createUser(User user) {
+		return userRepo.saveAndFlush(user);
+	}
+
+	@Override
+	public void deleteUser(User user) {
+		userRepo.delete(user);
+	}
+
 }
