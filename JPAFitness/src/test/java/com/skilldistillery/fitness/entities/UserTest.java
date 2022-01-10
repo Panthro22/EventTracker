@@ -49,6 +49,9 @@ class UserTest {
 		assertEquals("Jordon", user.getFirstName());
 		assertEquals("Paynter", user.getLastName());
 		assertEquals("jordonpaynter22@gmail.com", user.getEmail());
+		assertEquals(2022, user.getDailyLogEntries().get(0).getDate().getYear());
+		assertEquals(1, user.getDailyLogEntries().get(0).getDate().getMonthValue());
+		assertEquals(9, user.getDailyLogEntries().get(0).getDate().getDayOfMonth());
 	}
 
 }

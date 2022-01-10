@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +21,19 @@ public class DailyLogEntries {
 	private int id;
 	@Column(name="time_recorded")
 	private LocalDateTime date;
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
+	
+	
+	public DailyLogEntries() {
+		super();
+	}
+	public DailyLogEntries(int id, LocalDateTime date) {
+		super();
+		this.id = id;
+		this.date = date;
+	}
 	public int getId() {
 		return id;
 	}
@@ -32,8 +47,12 @@ public class DailyLogEntries {
 		this.date = date;
 	}
 	
-	
-	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

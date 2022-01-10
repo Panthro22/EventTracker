@@ -1,10 +1,15 @@
 package com.skilldistillery.fitness.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
@@ -17,6 +22,21 @@ public class User {
 	@Column(name="last_name")
 	private String lastName;
 	private String email;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="user")
+	private List<DailyLogEntries> dailyLogEntries;
+	
+	public User() {
+		super();
+	}
+	public User(int id, String firstName, String lastName, String email) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
 	public int getId() {
 		return id;
 	}
@@ -40,6 +60,13 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<DailyLogEntries> getDailyLogEntries() {
+		return dailyLogEntries;
+	}
+	public void setDailyLogEntries(List<DailyLogEntries> dailyLogEntries) {
+		this.dailyLogEntries = dailyLogEntries;
 	}
 	@Override
 	public String toString() {
