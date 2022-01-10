@@ -106,12 +106,11 @@ DROP TABLE IF EXISTS `images` ;
 
 CREATE TABLE IF NOT EXISTS `images` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `desription` VARCHAR(45) NULL,
+  `description` VARCHAR(45) NULL,
   `url` TEXT NULL,
   `title` VARCHAR(45) NULL,
-  `imagescol` VARCHAR(45) NULL,
-  `weight_excercise_id` INT NOT NULL,
-  `cardio_excercise_id` INT NOT NULL,
+  `weight_excercise_id` INT NULL,
+  `cardio_excercise_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_images_weight_excercise1_idx` (`weight_excercise_id` ASC),
   INDEX `fk_images_cardio_excercise1_idx` (`cardio_excercise_id` ASC),
@@ -138,8 +137,8 @@ CREATE TABLE IF NOT EXISTS `video` (
   `description` VARCHAR(45) NULL,
   `url` TEXT NULL,
   `title` VARCHAR(45) NULL,
-  `cardio_excercise_id` INT NOT NULL,
-  `weight_excercise_id` INT NOT NULL,
+  `cardio_excercise_id` INT NULL,
+  `weight_excercise_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_video_cardio_excercise1_idx` (`cardio_excercise_id` ASC),
   INDEX `fk_video_weight_excercise1_idx` (`weight_excercise_id` ASC),
@@ -278,6 +277,17 @@ INSERT INTO `cardio_excercise` (`id`, `name`) VALUES (1, 'Long distance');
 INSERT INTO `cardio_excercise` (`id`, `name`) VALUES (2, 'sprints');
 INSERT INTO `cardio_excercise` (`id`, `name`) VALUES (3, 'swim');
 INSERT INTO `cardio_excercise` (`id`, `name`) VALUES (4, 'bike');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `images`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `allroundfitness`;
+INSERT INTO `images` (`id`, `description`, `url`, `title`, `weight_excercise_id`, `cardio_excercise_id`) VALUES (1, 'Test Image Description', NULL, 'Test image', 1, NULL);
+INSERT INTO `images` (`id`, `description`, `url`, `title`, `weight_excercise_id`, `cardio_excercise_id`) VALUES (2, 'test cardio decs', NULL, 'test cardio', NULL, 1);
 
 COMMIT;
 

@@ -15,7 +15,7 @@ public class CardioExcercise {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	String name;
+	private String name;
 	public int getId() {
 		return id;
 	}

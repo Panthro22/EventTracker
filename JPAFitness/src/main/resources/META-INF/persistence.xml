@@ -6,10 +6,12 @@
 	<class>com.skilldistillery.fitness.entities.CardioExcercise</class>
 	<class>com.skilldistillery.fitness.entities.CardioTraining</class>
 	<class>com.skilldistillery.fitness.entities.DailyLogEntries</class>
+	<class>com.skilldistillery.fitness.entities.Images</class>
 	<class>com.skilldistillery.fitness.entities.User</class>
 	<class>com.skilldistillery.fitness.entities.WeightExcercise</class>
 	<class>com.skilldistillery.fitness.entities.WeightTraining</class>
 	<class>com.skilldistillery.fitness.entities.Workout</class>
+
 	
 
 	<properties>
