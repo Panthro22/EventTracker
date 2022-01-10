@@ -22,14 +22,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserById(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return userRepo.findById(userId).get();
 	}
 
 	@Override
-	public User updateUserById(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public User updateUserById(User user) {
+		return userRepo.saveAndFlush(user);
 	}
 
 }
