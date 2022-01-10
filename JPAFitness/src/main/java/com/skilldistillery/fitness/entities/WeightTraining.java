@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,8 +23,9 @@ public class WeightTraining {
 	private int sets;
 	private double weight;
 	private String scale;
-	
-	
+	@ManyToOne
+	@JoinColumn(name="workout_id")
+	private Workout workout;
 	
 	public int getId() {
 		return id;
@@ -59,6 +62,14 @@ public class WeightTraining {
 	}
 	public void setScale(String scale) {
 		this.scale = scale;
+	}
+	
+	
+	public Workout getWorkout() {
+		return workout;
+	}
+	public void setWorkout(Workout workout) {
+		this.workout = workout;
 	}
 	@Override
 	public int hashCode() {

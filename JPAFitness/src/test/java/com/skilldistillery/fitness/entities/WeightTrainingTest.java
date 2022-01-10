@@ -47,6 +47,7 @@ class WeightTrainingTest {
 	void test() {
 		assertNotNull(weightTrain);
 		assertEquals("Morning Lift", weightTrain.getName());
+		assertEquals(2022, weightTrain.getWorkout().getStartTime().getYear());
 		assertEquals(6, weightTrain.getRepetitions());
 		assertEquals(4, weightTrain.getSets());
 		assertEquals("lbs", weightTrain.getScale());

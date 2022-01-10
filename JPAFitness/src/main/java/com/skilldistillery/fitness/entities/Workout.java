@@ -1,7 +1,7 @@
 package com.skilldistillery.fitness.entities;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Workout {
@@ -26,6 +27,10 @@ public class Workout {
 	@ManyToOne
 	@JoinColumn(name="daily_log_entries_id")
 	private DailyLogEntries logEntry;
+	
+	@OneToMany(mappedBy="workout")
+	private List<WeightTraining> weightTraining;
+	
 	
 	
 	public int getId() {
@@ -60,6 +65,14 @@ public class Workout {
 
 	public void setLogEntry(DailyLogEntries logEntry) {
 		this.logEntry = logEntry;
+	}
+	
+	public List<WeightTraining> getWeightTraining() {
+		return weightTraining;
+	}
+
+	public void setWeightTraining(List<WeightTraining> weightTraining) {
+		this.weightTraining = weightTraining;
 	}
 
 	@Override

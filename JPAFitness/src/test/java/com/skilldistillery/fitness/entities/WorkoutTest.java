@@ -49,6 +49,7 @@ class WorkoutTest {
 		assertEquals(13, work.getStartTime().getHour());
 		assertEquals(59, work.getEndTime().getMinute());
 		assertEquals(1, work.getId());
+		assertEquals("Morning Lift", work.getWeightTraining().get(0).getName());
 		assertEquals(2022, work.getLogEntry().getDate().getYear());
 		assertEquals(1, work.getLogEntry().getDate().getMonthValue());
 		assertEquals(9, work.getLogEntry().getDate().getDayOfMonth());
