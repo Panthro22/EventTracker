@@ -49,6 +49,9 @@ class DailyLogEntriesTest {
 		assertEquals(2022, dle.getDate().getYear());
 		assertEquals(1, dle.getDate().getMonthValue());
 		assertEquals(9, dle.getDate().getDayOfMonth());
+		assertEquals("Jordon", dle.getUser().getFirstName());
+		assertEquals("Paynter", dle.getUser().getLastName());
+		
 	}
 
 }
