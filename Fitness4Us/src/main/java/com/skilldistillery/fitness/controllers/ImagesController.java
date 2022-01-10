@@ -21,23 +21,23 @@ public class ImagesController {
 	@Autowired
 	private ImagesService imageSvc;
 	
-	@GetMapping("logs")
+	@GetMapping("images")
 	public List<Images> index(){
 		return imageSvc.getAllImages();
 	}
-	@GetMapping("logs/{logId}")
+	@GetMapping("images/{imageId}")
 	public Images getLogById(@PathVariable int imageId){
 		return imageSvc.getImageById(imageId);
 	}
-	@PutMapping("logs")
+	@PutMapping("images")
 	public Images updateLog(@RequestBody Images image){
 		return imageSvc.updateImage(image);
 	}
-	@PostMapping("logs")
+	@PostMapping("images")
 	public Images createLog(@RequestBody Images image) {
 		return imageSvc.createImage(image);
 	}
-	@DeleteMapping("logs")
+	@DeleteMapping("images")
 	public void deleteLog(@RequestBody Images image) {
 		imageSvc.deleteImage(image);
 	}
