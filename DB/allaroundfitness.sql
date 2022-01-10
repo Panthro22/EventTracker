@@ -294,6 +294,16 @@ COMMIT;
 
 
 -- -----------------------------------------------------
+-- Data for table `video`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `allroundfitness`;
+INSERT INTO `video` (`id`, `description`, `url`, `title`, `cardio_excercise_id`, `weight_excercise_id`) VALUES (1, 'video testing description', NULL, 'video test', 1, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
 -- Data for table `weight_training`
 -- -----------------------------------------------------
 START TRANSACTION;

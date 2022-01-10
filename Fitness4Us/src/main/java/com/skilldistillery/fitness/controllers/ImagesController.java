@@ -26,19 +26,19 @@ public class ImagesController {
 		return imageSvc.getAllImages();
 	}
 	@GetMapping("images/{imageId}")
-	public Images getLogById(@PathVariable int imageId){
+	public Images getImagesById(@PathVariable int imageId){
 		return imageSvc.getImageById(imageId);
 	}
 	@PutMapping("images")
-	public Images updateLog(@RequestBody Images image){
+	public Images updateImages(@RequestBody Images image){
 		return imageSvc.updateImage(image);
 	}
 	@PostMapping("images")
-	public Images createLog(@RequestBody Images image) {
+	public Images createImages(@RequestBody Images image) {
 		return imageSvc.createImage(image);
 	}
 	@DeleteMapping("images")
-	public void deleteLog(@RequestBody Images image) {
+	public void deleteImages(@RequestBody Images image) {
 		imageSvc.deleteImage(image);
 	}
 }

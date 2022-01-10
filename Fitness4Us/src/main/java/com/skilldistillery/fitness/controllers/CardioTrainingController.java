@@ -25,7 +25,7 @@ public class CardioTrainingController {
 	public List<CardioTraining> index(){
 		return cardioTSvc.getAllCardioTrainings();
 	}
-	@GetMapping("cardiotrainings/{cardioT}")
+	@GetMapping("cardiotrainings/{cardioTId}")
 	public CardioTraining getLogById(@PathVariable int cardioTId){
 		return cardioTSvc.getCardioTrainingById(cardioTId);
 	}
