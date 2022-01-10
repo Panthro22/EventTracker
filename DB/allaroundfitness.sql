@@ -62,8 +62,8 @@ DROP TABLE IF EXISTS `workout` ;
 CREATE TABLE IF NOT EXISTS `workout` (
   `id` INT NOT NULL,
   `log_entries_id` INT NOT NULL,
-  `start_time` TIMESTAMP NULL,
-  `end_time` TIMESTAMP NULL,
+  `start_time` DATETIME NULL,
+  `end_time` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_log_log_entries1_idx` (`log_entries_id` ASC),
   CONSTRAINT `fk_log_log_entries1`
@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS `images` ;
 
 CREATE TABLE IF NOT EXISTS `images` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `description` VARCHAR(45) NULL,
+  `desription` VARCHAR(45) NULL,
   `url` TEXT NULL,
   `title` VARCHAR(45) NULL,
   `weight_excercise_id` INT NULL,
@@ -286,18 +286,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `allroundfitness`;
-INSERT INTO `images` (`id`, `description`, `url`, `title`, `weight_excercise_id`, `cardio_excercise_id`) VALUES (1, 'Test Image Description', NULL, 'Test image', 1, NULL);
-INSERT INTO `images` (`id`, `description`, `url`, `title`, `weight_excercise_id`, `cardio_excercise_id`) VALUES (2, 'test cardio decs', NULL, 'test cardio', NULL, 1);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `video`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `allroundfitness`;
-INSERT INTO `video` (`id`, `description`, `url`, `title`, `cardio_excercise_id`, `weight_excercise_id`) VALUES (1, 'Test video Description', NULL, 'Test video', 1, NULL);
+INSERT INTO `images` (`id`, `desription`, `url`, `title`, `weight_excercise_id`, `cardio_excercise_id`) VALUES (1, 'Test Image Description', NULL, 'Test image', 1, NULL);
+INSERT INTO `images` (`id`, `desription`, `url`, `title`, `weight_excercise_id`, `cardio_excercise_id`) VALUES (2, 'test cardio decs', NULL, 'test cardio', NULL, 1);
 
 COMMIT;
 

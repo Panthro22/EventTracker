@@ -29,11 +29,11 @@ public class DailyLogEntriesController {
 	public DailyLogEntries getLogById(@PathVariable int logId){
 		return logSvc.getDailyLogEntriesById(logId);
 	}
-	@PostMapping("logs")
-	public DailyLogEntries getLogById(@RequestBody DailyLogEntries log){
+	@PutMapping("logs")
+	public DailyLogEntries updateLog(@RequestBody DailyLogEntries log){
 		return logSvc.updateDailyLogEntriesById(log);
 	}
-	@PutMapping("logs")
+	@PostMapping("logs")
 	public DailyLogEntries createLog(@RequestBody DailyLogEntries log) {
 		return logSvc.createDailyLogEntries(log);
 	}
