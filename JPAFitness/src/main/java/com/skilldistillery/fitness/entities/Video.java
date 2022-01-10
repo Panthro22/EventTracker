@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Video {
@@ -16,6 +18,12 @@ public class Video {
 	private String title;
 	private String description;
 	private String url;
+	@ManyToOne
+	@JoinColumn(name="weight_excercise_id")
+	private WeightExcercise weightExcercise;
+	@ManyToOne
+	@JoinColumn(name="cardio_excercise_id")
+	private CardioExcercise cardioExcercise;
 	public int getId() {
 		return id;
 	}
@@ -39,6 +47,19 @@ public class Video {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	public WeightExcercise getWeightExcercise() {
+		return weightExcercise;
+	}
+	public void setWeightExcercise(WeightExcercise weightExcercise) {
+		this.weightExcercise = weightExcercise;
+	}
+	public CardioExcercise getCardioExcercise() {
+		return cardioExcercise;
+	}
+	public void setCardioExcercise(CardioExcercise cardioExcercise) {
+		this.cardioExcercise = cardioExcercise;
 	}
 	@Override
 	public int hashCode() {

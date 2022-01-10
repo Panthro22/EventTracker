@@ -50,6 +50,7 @@ class WeightTrainingTest {
 		assertEquals(2022, weightTrain.getWorkout().getStartTime().getYear());
 		assertEquals(6, weightTrain.getRepetitions());
 		assertEquals(4, weightTrain.getSets());
+		assertEquals("bench", weightTrain.getWeightExcercise().getName());
 		assertEquals("lbs", weightTrain.getScale());
 		
 	}

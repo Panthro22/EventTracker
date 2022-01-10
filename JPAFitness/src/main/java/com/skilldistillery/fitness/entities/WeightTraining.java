@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,6 +27,9 @@ public class WeightTraining {
 	@ManyToOne
 	@JoinColumn(name="workout_id")
 	private Workout workout;
+	@OneToOne
+	@JoinColumn(name="weight_excercise_id")
+	private WeightExcercise weightExcercise;
 	
 	public int getId() {
 		return id;
@@ -65,6 +69,12 @@ public class WeightTraining {
 	}
 	
 	
+	public WeightExcercise getWeightExcercise() {
+		return weightExcercise;
+	}
+	public void setWeightExcercise(WeightExcercise weightExcercise) {
+		this.weightExcercise = weightExcercise;
+	}
 	public Workout getWorkout() {
 		return workout;
 	}

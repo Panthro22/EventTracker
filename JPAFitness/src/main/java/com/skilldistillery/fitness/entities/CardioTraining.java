@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,6 +21,15 @@ public class CardioTraining {
 	private String name;
 	private double distance;
 	private String scale;
+	@ManyToOne
+	@JoinColumn(name="workout_id")
+	private Workout workout;
+	@OneToOne
+	@JoinColumn(name="cardio_excercise_id")
+	private CardioExcercise cardioExcercise;
+	
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -41,6 +53,20 @@ public class CardioTraining {
 	}
 	public void setScale(String scale) {
 		this.scale = scale;
+	}
+	
+	public Workout getWorkout() {
+		return workout;
+	}
+	public void setWorkout(Workout workout) {
+		this.workout = workout;
+	}
+	
+	public CardioExcercise getCardioExcercise() {
+		return cardioExcercise;
+	}
+	public void setCardioExcercise(CardioExcercise cardioExcercise) {
+		this.cardioExcercise = cardioExcercise;
 	}
 	@Override
 	public int hashCode() {

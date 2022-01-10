@@ -31,7 +31,8 @@ public class Workout {
 	@OneToMany(mappedBy="workout")
 	private List<WeightTraining> weightTraining;
 	
-	
+	@OneToMany(mappedBy="workout")
+	private List<CardioTraining> cardioTraining;
 	
 	public int getId() {
 		return id;
@@ -59,6 +60,14 @@ public class Workout {
 
 	
 	
+	public List<CardioTraining> getCardioTraining() {
+		return cardioTraining;
+	}
+
+	public void setCardioTraining(List<CardioTraining> cardioTraining) {
+		this.cardioTraining = cardioTraining;
+	}
+
 	public DailyLogEntries getLogEntry() {
 		return logEntry;
 	}

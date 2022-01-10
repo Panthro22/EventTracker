@@ -1,11 +1,14 @@
 package com.skilldistillery.fitness.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,6 +19,12 @@ public class WeightExcercise {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	@OneToOne(mappedBy="weightExcercise")
+	private WeightTraining weightTraining;
+	@OneToMany(mappedBy="weightExcercise")
+	private List<Images> images;
+	@OneToMany(mappedBy="weightExcercise")
+	private List<Video> video;
 	public int getId() {
 		return id;
 	}
@@ -28,10 +37,31 @@ public class WeightExcercise {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public WeightTraining getWeightTraining() {
+		return weightTraining;
+	}
+	public void setWeightTraining(WeightTraining weightTraining) {
+		this.weightTraining = weightTraining;
+	}
+	
+	public List<Images> getImages() {
+		return images;
+	}
+	public void setImages(List<Images> images) {
+		this.images = images;
+	}
+	
+	public List<Video> getVideo() {
+		return video;
+	}
+	public void setVideo(List<Video> video) {
+		this.video = video;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
