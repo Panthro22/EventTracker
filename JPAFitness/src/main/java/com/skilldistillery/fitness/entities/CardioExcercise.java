@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="cardio_excercise")
 public class CardioExcercise {
@@ -19,6 +21,7 @@ public class CardioExcercise {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	@JsonIgnore
 	@OneToOne(mappedBy="cardioExcercise")
 	private CardioTraining cardioTraining;
 	@OneToMany(mappedBy="cardioExcercise")

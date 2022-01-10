@@ -23,7 +23,6 @@ public class User {
 	private String lastName;
 	private String email;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<DailyLogEntries> dailyLogEntries;
 	

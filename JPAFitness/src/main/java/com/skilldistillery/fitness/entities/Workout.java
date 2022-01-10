@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Workout {
 	@Id
@@ -23,7 +25,7 @@ public class Workout {
 	
 	@Column(name="end_time")
 	private LocalDateTime endTime;
-	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="daily_log_entries_id")
 	private DailyLogEntries logEntry;

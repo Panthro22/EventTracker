@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Video {
 
@@ -18,9 +20,11 @@ public class Video {
 	private String title;
 	private String description;
 	private String url;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="weight_excercise_id")
 	private WeightExcercise weightExcercise;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="cardio_excercise_id")
 	private CardioExcercise cardioExcercise;

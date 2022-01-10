@@ -25,7 +25,7 @@ public class DailyLogEntries {
 	private int id;
 	@Column(name="time_recorded")
 	private LocalDateTime date;
-	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;

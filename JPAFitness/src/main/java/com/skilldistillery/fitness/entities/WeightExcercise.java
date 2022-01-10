@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="weight_excercise")
 public class WeightExcercise {
@@ -19,6 +21,7 @@ public class WeightExcercise {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	@JsonIgnore
 	@OneToOne(mappedBy="weightExcercise")
 	private WeightTraining weightTraining;
 	@OneToMany(mappedBy="weightExcercise")

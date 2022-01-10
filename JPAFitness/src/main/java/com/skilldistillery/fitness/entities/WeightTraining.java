@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="weight_training")
 public class WeightTraining {
@@ -24,6 +26,7 @@ public class WeightTraining {
 	private int sets;
 	private double weight;
 	private String scale;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="workout_id")
 	private Workout workout;

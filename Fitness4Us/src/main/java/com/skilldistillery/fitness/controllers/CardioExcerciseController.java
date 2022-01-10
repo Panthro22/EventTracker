@@ -21,23 +21,23 @@ public class CardioExcerciseController {
 	@Autowired
 	private CardioExcerciseService cardioExSvc;
 	
-	@GetMapping("logs")
+	@GetMapping("cardioexcercises")
 	public List<CardioExcercise> index(){
 		return cardioExSvc.getAllCardioExcercises();
 	}
-	@GetMapping("logs/{logId}")
+	@GetMapping("cardioexcercises/{cardioExId}")
 	public CardioExcercise getCardioExcerciseById(@PathVariable int cardioExId){
 		return cardioExSvc.getCardioExcerciseById(cardioExId);
 	}
-	@PutMapping("logs")
+	@PutMapping("cardioexcercises")
 	public CardioExcercise updateCardioExcercise(@RequestBody CardioExcercise cardioEx){
 		return cardioExSvc.updateCardioExcercise(cardioEx);
 	}
-	@PostMapping("logs")
+	@PostMapping("cardioexcercises")
 	public CardioExcercise createCardioExcercise(@RequestBody CardioExcercise cardioEx) {
 		return cardioExSvc.createCardioExcercise(cardioEx);
 	}
-	@DeleteMapping("logs")
+	@DeleteMapping("cardioexcercises")
 	public void deleteCardioExcercise(@RequestBody CardioExcercise cardioEx) {
 		cardioExSvc.deleteCardioExcercise(cardioEx);
 	}
