@@ -61,13 +61,13 @@ DROP TABLE IF EXISTS `workout` ;
 
 CREATE TABLE IF NOT EXISTS `workout` (
   `id` INT NOT NULL,
-  `log_entries_id` INT NOT NULL,
   `start_time` DATETIME NULL,
   `end_time` DATETIME NULL,
+  `daily_log_entries_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_log_log_entries1_idx` (`log_entries_id` ASC),
-  CONSTRAINT `fk_log_log_entries1`
-    FOREIGN KEY (`log_entries_id`)
+  INDEX `fk_workout_daily_log_entries1_idx` (`daily_log_entries_id` ASC),
+  CONSTRAINT `fk_workout_daily_log_entries1`
+    FOREIGN KEY (`daily_log_entries_id`)
     REFERENCES `daily_log_entries` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -250,8 +250,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `allroundfitness`;
-INSERT INTO `workout` (`id`, `log_entries_id`, `start_time`, `end_time`) VALUES (1, 1, '2022-01-09 13:59:00', '2022-01-09 14:59:00');
-INSERT INTO `workout` (`id`, `log_entries_id`, `start_time`, `end_time`) VALUES (2, 2, '2022-01-10 10:59:00', '2022-01-10 11:59:00');
+INSERT INTO `workout` (`id`, `start_time`, `end_time`, `daily_log_entries_id`) VALUES (1, '2022-01-09 13:59:00', '2022-01-09 14:59:00', 1);
+INSERT INTO `workout` (`id`, `start_time`, `end_time`, `daily_log_entries_id`) VALUES (2, '2022-01-10 10:59:00', '2022-01-10 11:59:00', 2);
 
 COMMIT;
 

@@ -1,6 +1,7 @@
 package com.skilldistillery.fitness.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -10,7 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="daily_log_entries")
@@ -21,11 +25,23 @@ public class DailyLogEntries {
 	private int id;
 	@Column(name="time_recorded")
 	private LocalDateTime date;
+	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="logEntry")
+	private List<Workout> workouts;
 	
+	
+	
+	public List<Workout> getWorkouts() {
+		return workouts;
+	}
+	public void setWorkouts(List<Workout> workouts) {
+		this.workouts = workouts;
+	}
 	public DailyLogEntries() {
 		super();
 	}

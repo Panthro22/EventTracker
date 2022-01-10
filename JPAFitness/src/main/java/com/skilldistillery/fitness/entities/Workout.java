@@ -1,5 +1,6 @@
 package com.skilldistillery.fitness.entities;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -8,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Workout {
@@ -15,11 +18,16 @@ public class Workout {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name="start_time")
-	private LocalTime startTime;
+	private LocalDateTime startTime;
 	
 	@Column(name="end_time")
-	private LocalTime endTime;
-
+	private LocalDateTime endTime;
+	
+	@ManyToOne
+	@JoinColumn(name="daily_log_entries_id")
+	private DailyLogEntries logEntry;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -28,24 +36,32 @@ public class Workout {
 		this.id = id;
 	}
 
-	public LocalTime getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(LocalTime startTime) {
+	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
 	}
 
-	public LocalTime getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(LocalTime endTime) {
+	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
 
 	
 	
+	public DailyLogEntries getLogEntry() {
+		return logEntry;
+	}
+
+	public void setLogEntry(DailyLogEntries logEntry) {
+		this.logEntry = logEntry;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
