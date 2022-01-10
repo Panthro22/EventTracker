@@ -38,8 +38,8 @@ public class DailyLogEntriesController {
 		return logSvc.createDailyLogEntries(log);
 	}
 	@DeleteMapping("logs")
-	public DailyLogEntries deleteLog(@RequestBody DailyLogEntries log) {
-		return logSvc.createDailyLogEntries(log);
+	public void deleteLog(@RequestBody DailyLogEntries log) {
+		logSvc.deleteDailyLogEntries(log);
 	}
 	
 }
