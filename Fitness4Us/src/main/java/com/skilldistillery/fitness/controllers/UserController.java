@@ -27,19 +27,19 @@ public class UserController {
 		return userSvc.getAllUser();
 	}
 	@GetMapping("users/{userId}")
-	public User getWorkoutById(@PathVariable int userId){
+	public User getUserById(@PathVariable int userId){
 		return userSvc.getUserById(userId);
 	}
 	@PutMapping("users")
-	public User updateWorkout(@RequestBody User user) {
+	public User updateUser(@RequestBody User user) {
 		return userSvc.updateUserById(user);			
 	}
 	@PostMapping("users")
-	public User createWorkout(@RequestBody User user) {
+	public User createUser(@RequestBody User user) {
 		return userSvc.createUser(user);			
 	}
 	@DeleteMapping("users")
-	public void deleteWorkout(@RequestBody User user){
+	public void deleteUser(@RequestBody User user){
 		userSvc.deleteUser(user);
 	}
 
