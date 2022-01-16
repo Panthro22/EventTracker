@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+/* Global Styles */
+
+html, body, .container {
+    font-family: "Share Tech Mono", monospace;
+    font-size: 12px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    color: #e7e7e7;
+    background: #c21118;
+    margin: none;
+}
+.navbar {
+	z-index:1; /*keep nav bar in front of other content, layer level priorities  */
+	overflow:hidden;
+	background-color:#000000;
+	top:0;
+	left:0;/* nav bar to extend to the left and right of entire page */
+	right:0;
+	position: fixed;
+	
+}
+
+nav {
+	background:000000;
+}
+
+.navbar a {
+	
+  background: 000000;
+  float: left;
+  display: block;
+  color: #ffffff;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar .nav-item{
+	background:000000;
+	 color: #9fa9ec;
+}
+
+.navbar a:hover {
+  background: #000000;
+  color: #eaf1ff;
+}
+
+ .nabar input[type=text]{
+	float: right;
+	padding: 6px;
+	font-size:17px;
+	border: 1px solid #1A2238;
+}
