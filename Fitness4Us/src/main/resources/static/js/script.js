@@ -10,28 +10,44 @@ window.addEventListener('load', function(e) {
 
 function init() {
 	registerAccount();
-
-/*		document.filmForm.lookup.addEventListener('click', function(event) {
-			event.preventDefault();
-			var filmId = document.filmForm.filmId.value;
-			if (!isNaN(filmId) && filmId > 0) {
-				getFilm(filmId);
-			}
-		})
-	document.addFilmForm.addFilm.addEventListener('click', function(event) {
+	document.registerForm.registerButton.addEventListener('click', function(event) {
 		event.preventDefault();
+		let user = document.registerForm;
+		console.log(user.role.value);
+		let newUser = {
+			firstName: user.fname.value,
+			lastName: user.lname.value,
+			username: user.username.value,
+			password: user.password.value,
+			email: user.email.value,
+			role: user.role.value,
+			enabled: user.enabled.value
+		}
+		createNewUser(newUser);
+	});
 
-		let addFilm = document.addFilmForm;
-		let newFilm = {
-			title: addFilm.title.value,
-			description: addFilm.description.value,
-			releaseYear: addFilm.releaseYear.value,
-			rating: addFilm.rating.value,
-			length: addFilm.length.value
-		};
-		//let f = event.target.parentElement;;
-		createFilm(newFilm);
-	});*/
+
+	/*		document.filmForm.lookup.addEventListener('click', function(event) {
+				event.preventDefault();
+				var filmId = document.filmForm.filmId.value;
+				if (!isNaN(filmId) && filmId > 0) {
+					getFilm(filmId);
+				}
+			})
+		document.addFilmForm.addFilm.addEventListener('click', function(event) {
+			event.preventDefault();
+	
+			let addFilm = document.addFilmForm;
+			let newFilm = {
+				title: addFilm.title.value,
+				description: addFilm.description.value,
+				releaseYear: addFilm.releaseYear.value,
+				rating: addFilm.rating.value,
+				length: addFilm.length.value
+			};
+			//let f = event.target.parentElement;;
+			createFilm(newFilm);
+		});*/
 }
 
 function registerAccount() {
@@ -39,46 +55,117 @@ function registerAccount() {
 	registerForm.name = 'registerForm';
 	let fname = document.createElement('input');
 	fname.placeholder = 'First name';
+	fname.name = 'fname';
 	fname.type = 'text';
 	let lname = document.createElement('input');
 	lname.placeholder = 'Last name';
+	lname.name = 'lname';
 	lname.type = 'text';
-	let userName = document.createElement('input');
-	userName.placeholder = 'user name';
-	userName.type = 'text';
+	let username = document.createElement('input');
+	username.placeholder = 'user name';
+	username.name = 'username';
+	username.type = 'text';
 	let password = document.createElement('input');
 	password.placeholder = 'password';
+	password.name = 'password';
 	password.type = 'text';
 	let role = document.createElement('input');
 	role.value = 'basic'
+	role.name = 'role';
 	role.type = 'hidden';
 	let email = document.createElement('input');
 	email.placeholder = 'email';
+	email.name = 'email';
 	email.type = 'text';
 	let enabled = document.createElement('input');
 	enabled.placeholder = '1';
+	enabled.name = 'enabled';
 	enabled.type = 'number';
 	enabled.min = 0;
 	enabled.max = 1;
-	let button = document.createElement('button');
+	let button = document.createElement('input');
 	button.type = 'submit';
 	button.name = 'registerButton';
 	button.textContent = 'Submit';
 	let mainTag = document.getElementById('main');
-	let br = document.createElement('br');
-	registerForm.appendChild(fname).appendChild(br);
-	registerForm.appendChild(lname).appendChild(br);
-	registerForm.appendChild(userName).appendChild(br);
-	registerForm.appendChild(password).appendChild(br);
-	registerForm.appendChild(role).appendChild(br);
-	registerForm.appendChild(email).appendChild(br);
-	registerForm.appendChild(enabled).appendChild(br);
-	registerForm.appendChild(button).appendChild(br);
 	
+	registerForm.appendChild(fname);
+	registerForm.appendChild(lname);
+	registerForm.appendChild(username);
+	registerForm.appendChild(password);
+	registerForm.appendChild(role);
+	registerForm.appendChild(email);
+	registerForm.appendChild(enabled);
+	registerForm.appendChild(button);
+
 	mainTag.appendChild(registerForm);
 
 };
+function createNewUser(newUser) {
+	console.log(newUser);
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', 'api/users');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 201 || xhr.status === 200) {
+				let user = JSON.parse(xhr.responseText);
+				console.log(xhr.getResponseHeader('Location'));
+				console.log(user);
+				displayUser(user);
+			} else {
+				console.error('User create failed with status: ' + xhr.status);
+			}
+		}
+	};
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.send(JSON.stringify(newUser));
 
+}
+function displayUser(user) {
+	var userDiv = document.createElement('div');
+
+	let table = document.createElement('table');
+	var title = document.createElement('thead');
+	var titleRow = document.createElement('tr');
+	var titleHeader = document.createElement('th');
+	titleHeader.textContent = 'Fullname';
+	var titleHeader2 = document.createElement('th');
+	titleHeader2.textContent = 'Username';
+	var titleHeader3 = document.createElement('th');
+	titleHeader3.textContent = 'Email';
+	var titleHeader4 = document.createElement('th');
+	titleHeader4.textContent = 'Subscription';
+	titleRow.appendChild(titleHeader);
+	titleRow.appendChild(titleHeader2);
+	titleRow.appendChild(titleHeader3);
+	titleRow.appendChild(titleHeader4);
+	title.appendChild(titleRow);
+	table.appendChild(title);
+	var body = document.createElement('tbody');
+
+
+	var bodyRow = document.createElement('tr');
+	var bodyCol = document.createElement('td');
+	var bodyCol2 = document.createElement('td');
+	var bodyCol3 = document.createElement('td');
+	var bodyCol4 = document.createElement('td');
+
+	bodyCol.textContent = user.firstName +' '+ user.lastName;
+	bodyCol2.textContent = user.username;
+	bodyCol3.textContent = user.email;
+	bodyCol4.textContent = user.role;
+	bodyRow.appendChild(bodyCol);
+	bodyRow.appendChild(bodyCol2);
+	bodyRow.appendChild(bodyCol3);
+	bodyRow.appendChild(bodyCol4);
+	body.appendChild(bodyRow)
+
+	table.appendChild(body);
+
+	userDiv.appendChild(table);
+	document.body.appendChild(userDiv);
+
+}
 function getActorsByFilmId(filmId) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', 'api/films/' + filmId + '/actors');
