@@ -30,7 +30,7 @@ public class DailyLogEntries {
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy="logEntry")
 	private List<Workout> workouts;
 	

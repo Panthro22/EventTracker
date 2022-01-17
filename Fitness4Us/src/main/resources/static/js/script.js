@@ -5,47 +5,35 @@ console.log('script.js loaded');
 
 window.addEventListener('load', function(e) {
 	console.log('document loaded');
+	getUsers();
+	getLogs();
+	getWorkouts();
+	getWeightTrainings();
+	getCardioTrainings()
+	getWeightExercises();
+	getCardioExercise();
 	init();
 });
 
 function init() {
-	registerAccount();
-	findAccount();
-	document.registerForm.registerButton.addEventListener('click', function(event) {
-		event.preventDefault();
-		let user = document.registerForm;
-		console.log(user.role.value);
-		let newUser = {
-			firstName: user.fname.value,
-			lastName: user.lname.value,
-			username: user.username.value,
-			password: user.password.value,
-			email: user.email.value,
-			role: user.role.value,
-			enabled: user.enabled.value
-		}
-		createNewUser(newUser);
-	});
-	document.accountForm.findAccountButton.addEventListener('click', function(event) {
-		event.preventDefault();
-		let userId = document.accountForm.accountId.value;
-		if (!isNaN(userId) && userId > 0) {
-			getUser(userId);
-		}
-
-	});
 
 
 }
 
-function getUser(userId) {
+
+
+function getUsers() {
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'api/users/' + userId);
+	xhr.open('GET', 'api/users');
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 200) {
-				let user = JSON.parse(xhr.responseText);
-				displayUser(user);
+				let users = JSON.parse(xhr.responseText);
+				if (users.length > 0) {
+					displayUsers(users);
+
+				}
+				console.log('Did not retrieve a list of users.')
 			}
 			else if (xhr.status === 500) {
 				displayError("User: " + userId + " was not found");
@@ -57,200 +45,11 @@ function getUser(userId) {
 
 	}
 	xhr.send();
-};
-
-function updateUser(user) {
-	let updateForm = document.createElement('form');
-	updateForm.name = 'updateForm';
-	let fname = document.createElement('input');
-	fname.value = user.firstName;
-	fname.name = 'fname';
-	fname.type = 'text';
-	fname.required;
-	let lname = document.createElement('input');
-	lname.value = user.lastName;
-	lname.name = 'lname';
-	lname.type = 'text';
-	lname.required;
-	let username = document.createElement('input');
-	username.value = user.username;
-	username.name = 'username';
-	username.type = 'text';
-	username.required;
-	let password = document.createElement('input');
-	password.value = user.password;
-	password.name = 'password';
-	password.type = 'text';
-	password.required;
-	let role = document.createElement('input');
-	role.value = 'basic'
-	role.name = 'role';
-	role.type = 'hidden';
-	let email = document.createElement('input');
-	email.value = user.email;
-	email.name = 'email';
-	email.type = 'text';
-	email.required;
-	let enabled = document.createElement('input');
-	enabled.value = user.enabled;
-	enabled.name = 'enabled';
-	enabled.type = 'number';
-	enabled.required;
-	enabled.min = 0;
-	enabled.max = 1;
-	let button = document.createElement('input');
-	button.type = 'submit';
-	button.name = 'updateButton';
-	button.textContent = 'Submit';
-	let mainTag = document.getElementById('main');
-
-	updateForm.appendChild(fname);
-	updateForm.appendChild(lname);
-	updateForm.appendChild(username);
-	updateForm.appendChild(password);
-	updateForm.appendChild(role);
-	updateForm.appendChild(email);
-	updateForm.appendChild(enabled);
-	updateForm.appendChild(button);
-
-	mainTag.appendChild(updateForm);
-
-	document.body.updateForm.updateButton.addEventListener('click', function(event) {
-		event.preventDefault();
-
-		updatedUser = {
-			id: user.id,
-			firstName: user.fname.value,
-			lastName: user.lname.value,
-			username: user.username.value,
-			password: user.password.value,
-			email: user.email.value,
-			role: user.role.value,
-			enabled: user.enabled.value
-		}; 
-		
-		updateUserData(updatedUser);
-	});
-}
-
-function updateUserData(newUser) {
-	console.log(newUser);
-	let xhr = new XMLHttpRequest();
-	xhr.open('PUT', 'api/users');
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 201 || xhr.status === 200) {
-				let user = JSON.parse(xhr.responseText);
-				displayUser(user);
-			} else {
-				displayError('User update failed with status: ' + xhr.status);
-			}
-		}
-	};
-
-	xhr.send(JSON.stringify(newUser));
-}
-
-
-function registerAccount() {
-	let registerForm = document.createElement('form');
-	registerForm.name = 'registerForm';
-	let fname = document.createElement('input');
-	fname.placeholder = 'First name';
-	fname.name = 'fname';
-	fname.type = 'text';
-	fname.required;
-	let lname = document.createElement('input');
-	lname.placeholder = 'Last name';
-	lname.name = 'lname';
-	lname.type = 'text';
-	lname.required;
-	let username = document.createElement('input');
-	username.placeholder = 'user name';
-	username.name = 'username';
-	username.type = 'text';
-	username.required;
-	let password = document.createElement('input');
-	password.placeholder = 'password';
-	password.name = 'password';
-	password.type = 'text';
-	password.required;
-	let role = document.createElement('input');
-	role.value = 'basic'
-	role.name = 'role';
-	role.type = 'hidden';
-	let email = document.createElement('input');
-	email.placeholder = 'email';
-	email.name = 'email';
-	email.type = 'text';
-	email.required;
-	let enabled = document.createElement('input');
-	enabled.placeholder = '1';
-	enabled.name = 'enabled';
-	enabled.type = 'number';
-	enabled.required;
-	enabled.min = 0;
-	enabled.max = 1;
-	let button = document.createElement('input');
-	button.type = 'submit';
-	button.name = 'registerButton';
-	button.textContent = 'Submit';
-	let mainTag = document.getElementById('main');
-
-	registerForm.appendChild(fname);
-	registerForm.appendChild(lname);
-	registerForm.appendChild(username);
-	registerForm.appendChild(password);
-	registerForm.appendChild(role);
-	registerForm.appendChild(email);
-	registerForm.appendChild(enabled);
-	registerForm.appendChild(button);
-
-	mainTag.appendChild(registerForm);
 
 };
-function createNewUser(newUser) {
-	let xhr = new XMLHttpRequest();
-	xhr.open('POST', 'api/users');
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 201 || xhr.status === 200) {
-				let user = JSON.parse(xhr.responseText);
-				console.log(xhr.getResponseHeader('Location'));
-				displayUser(user);
-			} else {
-				console.error('User create failed with status: ' + xhr.status);
-			}
-		}
-	};
-	xhr.setRequestHeader('Content-type', 'application/json');
-	xhr.send(JSON.stringify(newUser));
 
-}
-function deleteUser(deleteUser) {
-	let xhr = new XMLHttpRequest();
-	xhr.open('DELETE', 'api/users/');
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 200 || xhr.status === 201) {
-
-
-			}
-			else if (xhr.status === 404) {
-				displayError("User: " + user.id + " was not deleted");
-			}
-			else {
-				displayError("Error deleting user: " + xhr.status);
-			}
-		}
-
-	}
-	xhr.setRequestHeader('Content-type', 'application/json');
-	xhr.send(JSON.stringify(deleteUser));
-}
-
-function displayUser(user) {
-	var main = document.createElement('main');
+function displayUsers(users) {
+	var userDiv = document.getElementById('userDiv');
 	main.name = 'userDivDisplay';
 	let table = document.createElement('table');
 	table.name = 'userDisplay';
@@ -273,81 +72,482 @@ function displayUser(user) {
 	var body = document.createElement('tbody');
 	body.name = 'userTableBody';
 
+	for (user of users) {
+		var bodyRow = document.createElement('tr');
+		var bodyCol = document.createElement('td');
+		var bodyCol2 = document.createElement('td');
+		var bodyCol3 = document.createElement('td');
+		var bodyCol4 = document.createElement('td');
 
-	var bodyRow = document.createElement('tr');
-	var bodyCol = document.createElement('td');
-	var bodyCol2 = document.createElement('td');
-	var bodyCol3 = document.createElement('td');
-	var bodyCol4 = document.createElement('td');
+		bodyCol.textContent = user.firstName + ' ' + user.lastName;
+		bodyCol2.textContent = user.username;
+		bodyCol3.textContent = user.email;
+		bodyCol4.textContent = user.role;
+		bodyRow.appendChild(bodyCol);
+		bodyRow.appendChild(bodyCol2);
+		bodyRow.appendChild(bodyCol3);
+		bodyRow.appendChild(bodyCol4);
 
-	bodyCol.textContent = user.firstName + ' ' + user.lastName;
-	bodyCol2.textContent = user.username;
-	bodyCol3.textContent = user.email;
-	bodyCol4.textContent = user.role;
-	bodyRow.appendChild(bodyCol);
-	bodyRow.appendChild(bodyCol2);
-	bodyRow.appendChild(bodyCol3);
-	bodyRow.appendChild(bodyCol4);
 
-	let editUserForm = document.createElement('form');
-	editUserForm.name = 'editUserForm';
-	let deleteUserForm = document.createElement('form');
-	deleteUserForm.name = 'deleteUserForm';
-	let editButton = document.createElement('button');
-	editButton.type = 'submit';
-	editButton.name = 'userEdit';
-	editButton.textContent = 'Update';
-
-	let deleteButton = document.createElement('button');
-	deleteButton.type = 'submit';
-	deleteButton.name = 'deleteButton';
-	deleteButton.textContent = 'Delete';
-	editUserForm.appendChild(editButton);
-	deleteUserForm.appendChild(deleteButton);
-	body.appendChild(bodyRow)
-
+		body.appendChild(bodyRow)
+	}
 	table.appendChild(body);
-	main.appendChild(table);
+	userDiv.appendChild(table);
 
-	main.appendChild(editUserForm);
-	main.appendChild(deleteUserForm);
 
-	document.body.appendChild(main);
-	
-	document.editUserForm.userEdit.addEventListener('click', function(event) {
-		event.preventDefault();
-		updateUser(user);
-	});
-
-	document.deleteUserForm.deleteButton.addEventListener('click', function(event) {
-		event.preventDefault();
-		deleteUser(user);
-	});
 
 }
 
-function findAccount() {
-	let findAccountForm = document.createElement('form');
-	findAccountForm.name = 'accountForm';
-	findAccountForm.textContent = 'Search for Account by Id: ';
-	let accId = document.createElement('input');
-	accId.placeholder = 'account Id';
-	accId.name = 'accountId';
-	accId.type = 'number';
-	let button = document.createElement('input');
-	button.type = 'submit';
-	button.name = 'findAccountButton';
-	button.textContent = 'Submit';
+function getLogs() {
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/logs');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let logs = JSON.parse(xhr.responseText);
+				if (logs.length > 0) {
+					displayLogs(logs);
 
-	findAccountForm.appendChild(accId);
-	findAccountForm.appendChild(button);
-	main.appendChild(findAccountForm);
+				} else {
+					console.log('Did not retrieve a list of logs.')
+				}
+			}
+			else if (xhr.status === 500) {
+				displayError("logs were not found");
+			}
+			else {
+				displayError("Error retrieving logs: " + xhr.status);
+			}
+		}
+
+	}
+	xhr.send();
 
 };
+function displayLogs(logs) {
+	var logDiv = document.getElementById('logDiv');
+	let table = document.createElement('table');
+	var title = document.createElement('thead');
+	var titleRow = document.createElement('tr');
+	var titleHeader = document.createElement('th');
+	titleHeader.textContent = 'Log Id';
+	var titleHeader2 = document.createElement('th');
+	titleHeader2.textContent = 'Date';
 
-function displayError(msg) {
-	var main = document.getElementById('main');
-	main.textContent = msg;
+
+
+
+
+	titleRow.appendChild(titleHeader);
+	titleRow.appendChild(titleHeader2);
+
+	title.appendChild(titleRow);
+	table.appendChild(title);
+	var body = document.createElement('tbody');
+	body.name = 'userTableBody';
+
+	for (log of logs) {
+		var bodyRow = document.createElement('tr');
+		var bodyCol = document.createElement('td');
+		var bodyCol2 = document.createElement('td');
+
+
+		bodyCol.textContent = log.id;
+		bodyCol2.textContent = log.date;
+		bodyRow.appendChild(bodyCol);
+		bodyRow.appendChild(bodyCol2);
+
+
+
+		body.appendChild(bodyRow)
+	}
+	table.appendChild(body);
+	logDiv.appendChild(table);
+
+}
+function getWorkouts() {
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/workouts');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let workouts = JSON.parse(xhr.responseText);
+				if (workouts.length > 0) {
+					displayWorkouts(workouts);
+
+				} else {
+					console.log('Did not retrieve a list of logs.')
+				}
+			}
+			else if (xhr.status === 500) {
+				displayError("logs were not found");
+			}
+			else {
+				displayError("Error retrieving logs: " + xhr.status);
+			}
+		}
+
+	}
+	xhr.send();
+
+};
+function displayWorkouts(workouts) {
+	var workDiv = document.getElementById('workoutDiv');
+	let table = document.createElement('table');
+	var title = document.createElement('thead');
+	var titleRow = document.createElement('tr');
+	var titleHeader = document.createElement('th');
+	titleHeader.textContent = 'Log Id';
+	var titleHeader2 = document.createElement('th');
+	titleHeader2.textContent = 'start date time';
+	var titleHeader3 = document.createElement('th');
+	titleHeader3.textContent = 'end date time';
+
+
+
+
+
+	titleRow.appendChild(titleHeader);
+	titleRow.appendChild(titleHeader2);
+	titleRow.appendChild(titleHeader3);
+
+	title.appendChild(titleRow);
+	table.appendChild(title);
+	var body = document.createElement('tbody');
+	body.name = 'userTableBody';
+
+	for (workout of workouts) {
+		var bodyRow = document.createElement('tr');
+		var bodyCol = document.createElement('td');
+		var bodyCol2 = document.createElement('td');
+		var bodyCol3 = document.createElement('td');
+
+
+		bodyCol.textContent = workout.id;
+		bodyCol2.textContent = workout.startTime;
+		bodyCol3.textContent = workout.endTime;
+		bodyRow.appendChild(bodyCol);
+		bodyRow.appendChild(bodyCol2);
+		bodyRow.appendChild(bodyCol3);
+
+
+
+		body.appendChild(bodyRow)
+	}
+	table.appendChild(body);
+	workDiv.appendChild(table);
+
 }
 
+function getWeightExercises() {
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/weightExcercises');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let exercises = JSON.parse(xhr.responseText);
+				if (exercises.length > 0) {
+					displayExcercises(exercises);
 
+				}
+				console.log('Did not retrieve a list of exercises.')
+			}
+			else if (xhr.status === 500) {
+				displayError("exercises: " + exercises + " was not found");
+			}
+			else {
+				displayError("Error retrieving user: " + xhr.status);
+			}
+		}
+
+	}
+	xhr.send();
+};
+
+function displayExcercises(exercises) {
+	var weightDiv = document.getElementById('weightLifingExerciseDiv');
+	let table = document.createElement('table');
+	var title = document.createElement('thead');
+	var titleRow = document.createElement('tr');
+	var titleHeader = document.createElement('th');
+	titleHeader.textContent = 'Weight Id';
+	var titleHeader2 = document.createElement('th');
+	titleHeader2.textContent = 'Name';
+
+
+
+
+
+
+	titleRow.appendChild(titleHeader);
+	titleRow.appendChild(titleHeader2);
+
+
+	title.appendChild(titleRow);
+	table.appendChild(title);
+	var body = document.createElement('tbody');
+	body.name = 'userTableBody';
+
+	for (exercise of exercises) {
+		var bodyRow = document.createElement('tr');
+		var bodyCol = document.createElement('td');
+		var bodyCol2 = document.createElement('td');
+
+
+
+		bodyCol.textContent = exercise.id;
+		bodyCol2.textContent = exercise.name;
+
+		bodyRow.appendChild(bodyCol);
+		bodyRow.appendChild(bodyCol2);
+
+
+
+
+		body.appendChild(bodyRow)
+	}
+	table.appendChild(body);
+	weightDiv.appendChild(table);
+}
+function getCardioExercise() {
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/cardioexcercises');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let exercises = JSON.parse(xhr.responseText);
+				if (exercises.length > 0) {
+					displayCardioExcercises(exercises);
+
+				}
+				console.log('Did not retrieve a list of exercises.')
+			}
+			else if (xhr.status === 500) {
+				displayError("Cardio exercises: " + exercises + " was not found");
+			}
+			else {
+				displayError("Error retrieving cardio: " + xhr.status);
+			}
+		}
+
+	}
+	xhr.send();
+};
+
+function displayCardioExcercises(exercises) {
+	var cardioDiv = document.getElementById('cardioExerciseDiv');
+	let table = document.createElement('table');
+	var title = document.createElement('thead');
+	var titleRow = document.createElement('tr');
+	var titleHeader = document.createElement('th');
+	titleHeader.textContent = 'Cardio Id';
+	var titleHeader2 = document.createElement('th');
+	titleHeader2.textContent = 'Name';
+
+
+
+
+
+
+	titleRow.appendChild(titleHeader);
+	titleRow.appendChild(titleHeader2);
+
+
+	title.appendChild(titleRow);
+	table.appendChild(title);
+	var body = document.createElement('tbody');
+	body.name = 'userTableBody';
+
+	for (exercise of exercises) {
+		var bodyRow = document.createElement('tr');
+		var bodyCol = document.createElement('td');
+		var bodyCol2 = document.createElement('td');
+
+
+
+		bodyCol.textContent = exercise.id;
+		bodyCol2.textContent = exercise.name;
+
+		bodyRow.appendChild(bodyCol);
+		bodyRow.appendChild(bodyCol2);
+
+
+
+
+		body.appendChild(bodyRow)
+	}
+	table.appendChild(body);
+	cardioDiv.appendChild(table);
+}
+
+function getWeightTrainings(){
+		let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/weighttrainings');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let trainings = JSON.parse(xhr.responseText);
+				if (trainings.length > 0) {
+					displayWeightTrainings(trainings);
+
+				}
+				console.log('Did not retrieve a list of weight trainings.')
+			}
+			else if (xhr.status === 500) {
+				displayError("Weight trainings: " + trainings + " was not found");
+			}
+			else {
+				displayError("Error retrieving weight trainings: " + xhr.status);
+			}
+		}
+
+	}
+	xhr.send();
+};
+
+function displayWeightTrainings(trainings) {
+	var weightTrainingDiv = document.getElementById('WeightTrainingDiv');
+	let table = document.createElement('table');
+	var title = document.createElement('thead');
+	var titleRow = document.createElement('tr');
+	var titleHeader = document.createElement('th');
+	titleHeader.textContent = 'Id';
+	var titleHeader2 = document.createElement('th');
+	titleHeader2.textContent = 'Name';
+	var titleHeader3 = document.createElement('th');
+	titleHeader3.textContent = 'Reps';
+	var titleHeader4 = document.createElement('th');
+	titleHeader4.textContent = 'Sets';
+	var titleHeader5 = document.createElement('th');
+	titleHeader5.textContent = 'Weight';
+	var titleHeader6 = document.createElement('th');
+	titleHeader6.textContent = 'Scale';
+
+	titleRow.appendChild(titleHeader);
+	titleRow.appendChild(titleHeader2);
+	titleRow.appendChild(titleHeader3);
+	titleRow.appendChild(titleHeader4);
+	titleRow.appendChild(titleHeader5);
+	titleRow.appendChild(titleHeader6);
+
+
+	title.appendChild(titleRow);
+	table.appendChild(title);
+	var body = document.createElement('tbody');
+	body.name = 'userTableBody';
+
+	for (training of trainings) {
+		var bodyRow = document.createElement('tr');
+		var bodyCol = document.createElement('td');
+		var bodyCol2 = document.createElement('td');
+		var bodyCol3 = document.createElement('td');
+		var bodyCol4 = document.createElement('td');
+		var bodyCol5 = document.createElement('td');
+		var bodyCol6 = document.createElement('td');
+
+
+
+		bodyCol.textContent = training.id;
+		bodyCol2.textContent = training.name;
+		bodyCol3.textContent = training.repetitions;
+		bodyCol4.textContent = training.sets;
+		bodyCol5.textContent = training.weight;
+		bodyCol6.textContent = training.scale;
+
+		bodyRow.appendChild(bodyCol);
+		bodyRow.appendChild(bodyCol2);
+		bodyRow.appendChild(bodyCol3);
+		bodyRow.appendChild(bodyCol4);
+		bodyRow.appendChild(bodyCol5);
+		bodyRow.appendChild(bodyCol6);
+
+
+
+
+		body.appendChild(bodyRow)
+	}
+	table.appendChild(body);
+	weightTrainingDiv.appendChild(table);
+}
+
+function getCardioTrainings(){
+		let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/cardiotrainings');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let trainings = JSON.parse(xhr.responseText);
+				if (trainings.length > 0) {
+					displayCardioTrainings(trainings);
+
+				}
+				console.log('Did not retrieve a list of weight trainings.')
+			}
+			else if (xhr.status === 500) {
+				displayError("Weight trainings: " + trainings + " was not found");
+			}
+			else {
+				displayError("Error retrieving weight trainings: " + xhr.status);
+			}
+		}
+
+	}
+	xhr.send();
+};
+
+function displayCardioTrainings(trainings) {
+	var cardioTrainingDiv = document.getElementById('CardioTrainingDiv');
+	let table = document.createElement('table');
+	var title = document.createElement('thead');
+	var titleRow = document.createElement('tr');
+	var titleHeader = document.createElement('th');
+	titleHeader.textContent = 'Id';
+	var titleHeader2 = document.createElement('th');
+	titleHeader2.textContent = 'Name';
+	var titleHeader3 = document.createElement('th');
+	titleHeader3.textContent = 'Distance';
+	var titleHeader4 = document.createElement('th');
+	titleHeader4.textContent = 'Scale';
+
+
+	titleRow.appendChild(titleHeader);
+	titleRow.appendChild(titleHeader2);
+	titleRow.appendChild(titleHeader3);
+	titleRow.appendChild(titleHeader4);
+
+
+
+	title.appendChild(titleRow);
+	table.appendChild(title);
+	var body = document.createElement('tbody');
+	body.name = 'userTableBody';
+
+	for (training of trainings) {
+		var bodyRow = document.createElement('tr');
+		var bodyCol = document.createElement('td');
+		var bodyCol2 = document.createElement('td');
+		var bodyCol3 = document.createElement('td');
+		var bodyCol4 = document.createElement('td');
+
+
+
+
+		bodyCol.textContent = training.id;
+		bodyCol2.textContent = training.name;
+		bodyCol3.textContent = training.distance;
+		bodyCol4.textContent = training.scale;
+
+		bodyRow.appendChild(bodyCol);
+		bodyRow.appendChild(bodyCol2);
+		bodyRow.appendChild(bodyCol3);
+		bodyRow.appendChild(bodyCol4);
+
+
+
+
+
+		body.appendChild(bodyRow)
+	}
+	table.appendChild(body);
+	cardioTrainingDiv.appendChild(table);
+}

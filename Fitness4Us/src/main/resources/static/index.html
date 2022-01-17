@@ -3,28 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <title>Fitness4Us</title>
-<script type="text/javascript" src="js/script.js"></script>
 <link rel="stylesheet" type="text/css" media="screen"
 	href="css/NavBar.css" />
 </head>
 <body>
 	<div class="navbar">
 		<nav class="navbar navbar-expand-sm">
-			<a class="navbar-brand" href="home">Fitness 4 Us</a>
+			<a class="navbar-brand" href="">Fitness 4 Us</a>
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="home">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="gallery">View
+					<li class="nav-item"><a class="nav-link" href="">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="">View
 							Exercises</a></li>
-					<li class="nav-item"><a class="nav-link" href="logout.do">Logout</a></li>
+					<li class="nav-item"><a class="nav-link" href="">Logout</a></li>
 				</ul>
-				<input type="text" placeholder="search...">
 			</div>
 		</nav>
 	</div>
 	<h1>Fitness 4 Us</h1>
 	<h3>Track your Health</h3>
-	<main id = 'main'></main>
-
+	<main id = 'main'>Main<br>
+	</main>
+	
+	<div id = "userDiv">User Info<br>
+		<form>
+		<input id ="" type="text" placeholder="" required>
+		<button id = "userAdd">Register User</button>
+		</form>
+	</div>
+	<div id = "logDiv">Daily Log<br>
+	
+		<button id = "logAdd">Add Log</button>
+	</div>
+	
+	<div id = "workoutDiv">Work out Log <br>
+		<button id="workoutAdd"> Add Workout</button>
+		<div id = "WeightTrainingDiv">Weight Training</div>
+		<div id = "CardioTrainingDiv">Cardio Training</div>
+	</div>
+	
+	<div id = "weightLifingExerciseDiv">Weight Lifting Exercises<br>
+		<button id="weightAdd"> Add Weight Lifting Excercise</button>
+	</div>
+	
+	<div id = "cardioExerciseDiv">Cardio Exercises <br>
+	<button id="cardioAdd"> Add Cardio Exercise</button>
+	</div>
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
