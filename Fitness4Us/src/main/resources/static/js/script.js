@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ *
  */
 console.log('script.js loaded');
 
@@ -10,6 +10,7 @@ window.addEventListener('load', function(e) {
 
 function init() {
 	registerAccount();
+	findAccount();
 	document.registerForm.registerButton.addEventListener('click', function(event) {
 		event.preventDefault();
 		let user = document.registerForm;
@@ -25,30 +26,132 @@ function init() {
 		}
 		createNewUser(newUser);
 	});
+	document.accountForm.findAccountButton.addEventListener('click', function(event) {
+		event.preventDefault();
+		let userId = document.accountForm.accountId.value;
+		if (!isNaN(userId) && userId > 0) {
+			getUser(userId);
+		}
+
+	});
 
 
-	/*		document.filmForm.lookup.addEventListener('click', function(event) {
-				event.preventDefault();
-				var filmId = document.filmForm.filmId.value;
-				if (!isNaN(filmId) && filmId > 0) {
-					getFilm(filmId);
-				}
-			})
-		document.addFilmForm.addFilm.addEventListener('click', function(event) {
-			event.preventDefault();
-	
-			let addFilm = document.addFilmForm;
-			let newFilm = {
-				title: addFilm.title.value,
-				description: addFilm.description.value,
-				releaseYear: addFilm.releaseYear.value,
-				rating: addFilm.rating.value,
-				length: addFilm.length.value
-			};
-			//let f = event.target.parentElement;;
-			createFilm(newFilm);
-		});*/
 }
+
+function getUser(userId) {
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/users/' + userId);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				let user = JSON.parse(xhr.responseText);
+				displayUser(user);
+			}
+			else if (xhr.status === 404) {
+				displayError("User: " + userId + " was not found");
+			}
+			else {
+				displayError("Error retrieving user: " + xhr.status);
+			}
+		}
+
+	}
+	xhr.send();
+};
+
+function updateUser(user) {
+	let updateForm = document.createElement('form');
+	updateForm.name = 'updateForm';
+	let fname = document.createElement('input');
+	fname.value = user.firstName;
+	fname.name = 'fname';
+	fname.type = 'text';
+	fname.required;
+	let lname = document.createElement('input');
+	lname.value = user.lastName;
+	lname.name = 'lname';
+	lname.type = 'text';
+	lname.required;
+	let username = document.createElement('input');
+	username.value = user.username;
+	username.name = 'username';
+	username.type = 'text';
+	username.required;
+	let password = document.createElement('input');
+	password.value = user.password;
+	password.name = 'password';
+	password.type = 'text';
+	password.required;
+	let role = document.createElement('input');
+	role.value = 'basic'
+	role.name = 'role';
+	role.type = 'hidden';
+	let email = document.createElement('input');
+	email.value = user.email;
+	email.name = 'email';
+	email.type = 'text';
+	email.required;
+	let enabled = document.createElement('input');
+	enabled.value = user.enabled;
+	enabled.name = 'enabled';
+	enabled.type = 'number';
+	enabled.required;
+	enabled.min = 0;
+	enabled.max = 1;
+	let button = document.createElement('input');
+	button.type = 'submit';
+	button.name = 'updateButton';
+	button.textContent = 'Submit';
+	let mainTag = document.getElementById('main');
+
+	updateForm.appendChild(fname);
+	updateForm.appendChild(lname);
+	updateForm.appendChild(username);
+	updateForm.appendChild(password);
+	updateForm.appendChild(role);
+	updateForm.appendChild(email);
+	updateForm.appendChild(enabled);
+	updateForm.appendChild(button);
+
+	mainTag.appendChild(updateForm);
+
+	document.body.updateForm.updateButton.addEventListener('click', function(event) {
+		event.preventDefault();
+
+		updatedUser = {
+			id: user.id,
+			firstName: user.fname.value,
+			lastName: user.lname.value,
+			username: user.username.value,
+			password: user.password.value,
+			email: user.email.value,
+			role: user.role.value,
+			enabled: user.enabled.value
+		}
+		updateUserData(updatedUser);
+	});
+}
+
+function updateUserData(newUser) {
+	console.log(newUser);
+	let xhr = new XMLHttpRequest();
+	xhr.open('PUT', 'api/users');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 201 || xhr.status === 200) {
+				let user = JSON.parse(xhr.responseText);
+				console.log(xhr.getResponseHeader('Location'));
+				console.log(user);
+				displayUser(user);
+			} else {
+				displayError('User update failed with status: ' + xhr.status);
+			}
+		}
+	};
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.send(JSON.stringify(newUser));
+}
+
 
 function registerAccount() {
 	let registerForm = document.createElement('form');
@@ -57,18 +160,22 @@ function registerAccount() {
 	fname.placeholder = 'First name';
 	fname.name = 'fname';
 	fname.type = 'text';
+	fname.required;
 	let lname = document.createElement('input');
 	lname.placeholder = 'Last name';
 	lname.name = 'lname';
 	lname.type = 'text';
+	lname.required;
 	let username = document.createElement('input');
 	username.placeholder = 'user name';
 	username.name = 'username';
 	username.type = 'text';
+	username.required;
 	let password = document.createElement('input');
 	password.placeholder = 'password';
 	password.name = 'password';
 	password.type = 'text';
+	password.required;
 	let role = document.createElement('input');
 	role.value = 'basic'
 	role.name = 'role';
@@ -77,10 +184,12 @@ function registerAccount() {
 	email.placeholder = 'email';
 	email.name = 'email';
 	email.type = 'text';
+	email.required;
 	let enabled = document.createElement('input');
 	enabled.placeholder = '1';
 	enabled.name = 'enabled';
 	enabled.type = 'number';
+	enabled.required;
 	enabled.min = 0;
 	enabled.max = 1;
 	let button = document.createElement('input');
@@ -88,7 +197,7 @@ function registerAccount() {
 	button.name = 'registerButton';
 	button.textContent = 'Submit';
 	let mainTag = document.getElementById('main');
-	
+
 	registerForm.appendChild(fname);
 	registerForm.appendChild(lname);
 	registerForm.appendChild(username);
@@ -121,10 +230,33 @@ function createNewUser(newUser) {
 	xhr.send(JSON.stringify(newUser));
 
 }
-function displayUser(user) {
-	var userDiv = document.createElement('div');
+function deleteUser(deleteUser) {
+	let xhr = new XMLHttpRequest();
+	xhr.open('DELETE', 'api/users/');
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200 || xhr.status === 201) {
 
+
+			}
+			else if (xhr.status === 404) {
+				displayError("User: " + user.id + " was not deleted");
+			}
+			else {
+				displayError("Error deleting user: " + xhr.status);
+			}
+		}
+
+	}
+	xhr.setRequestHeader('Content-type', 'application/json');
+	xhr.send(JSON.stringify(deleteUser));
+}
+
+function displayUser(user) {
+	var main = document.createElement('main');
+	main.name = 'userDivDisplay';
 	let table = document.createElement('table');
+	table.name = 'userDisplay';
 	var title = document.createElement('thead');
 	var titleRow = document.createElement('tr');
 	var titleHeader = document.createElement('th');
@@ -142,6 +274,7 @@ function displayUser(user) {
 	title.appendChild(titleRow);
 	table.appendChild(title);
 	var body = document.createElement('tbody');
+	body.name = 'userTableBody';
 
 
 	var bodyRow = document.createElement('tr');
@@ -150,7 +283,7 @@ function displayUser(user) {
 	var bodyCol3 = document.createElement('td');
 	var bodyCol4 = document.createElement('td');
 
-	bodyCol.textContent = user.firstName +' '+ user.lastName;
+	bodyCol.textContent = user.firstName + ' ' + user.lastName;
 	bodyCol2.textContent = user.username;
 	bodyCol3.textContent = user.email;
 	bodyCol4.textContent = user.role;
@@ -158,140 +291,65 @@ function displayUser(user) {
 	bodyRow.appendChild(bodyCol2);
 	bodyRow.appendChild(bodyCol3);
 	bodyRow.appendChild(bodyCol4);
+
+	let editUserForm = document.createElement('form');
+	editUserForm.name = 'editUserForm';
+	let deleteUserForm = document.createElement('form');
+	deleteUserForm.name = 'deleteUserForm';
+	let editButton = document.createElement('button');
+	editButton.type = 'submit';
+	editButton.name = 'userEdit';
+	editButton.textContent = 'Update';
+
+	let deleteButton = document.createElement('button');
+	deleteButton.type = 'submit';
+	deleteButton.name = 'deleteButton';
+	deleteButton.textContent = 'Delete';
+	editUserForm.appendChild(editButton);
+	deleteUserForm.appendChild(deleteButton);
 	body.appendChild(bodyRow)
 
 	table.appendChild(body);
+	main.appendChild(table);
 
-	userDiv.appendChild(table);
-	document.body.appendChild(userDiv);
+	main.appendChild(editUserForm);
+	main.appendChild(deleteUserForm);
+
+	document.body.appendChild(main);
+	document.editUserForm.userEdit.addEventListener('click', function(event) {
+		event.preventDefault();
+		updateUser(user);
+	});
+
+	document.deleteUserForm.deleteButton.addEventListener('click', function(event) {
+		event.preventDefault();
+		deleteUser(user);
+	});
 
 }
-function getActorsByFilmId(filmId) {
-	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'api/films/' + filmId + '/actors');
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
-				// * On success, if a response was received parse the film data
-				//   and pass the film object to displayFilm().
-				//Do stuff here with server data!!!
-				let actors = JSON.parse(xhr.responseText);
-				displayActors(actors);
-			}
-			// * On failure, or if no response text was received, put "Film not found" 
-			//   in the filmData div.
-			else if (xhr.status === 404) {
-				displayError("Actors for film: " + filmId + " was not found");
-			}
-			else {
-				displayError("Error retrieving film: " + xhr.status);
-			}
-		}
 
-	}
-	xhr.send();
-}
-function getFilm(filmId) {
-	// TODO:
-	// * Use XMLHttpRequest to perform a GET request to "api/films/"
-	//   with the filmId appended.
-	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'api/films/' + filmId);
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
-				// * On success, if a response was received parse the film data
-				//   and pass the film object to displayFilm().
-				//Do stuff here with server data!!!
-				let film = JSON.parse(xhr.responseText);
-				displayFilm(film);
-			}
-			// * On failure, or if no response text was received, put "Film not found" 
-			//   in the filmData div.
-			else if (xhr.status === 404) {
-				displayError("Film: " + filmId + " was not found");
-			}
-			else {
-				displayError("Error retrieving film: " + xhr.status);
-			}
-		}
+function findAccount() {
+	let findAccountForm = document.createElement('form');
+	findAccountForm.name = 'accountForm';
+	findAccountForm.textContent = 'Search for Account by Id: ';
+	let accId = document.createElement('input');
+	accId.placeholder = 'account Id';
+	accId.name = 'accountId';
+	accId.type = 'number';
+	let button = document.createElement('input');
+	button.type = 'submit';
+	button.name = 'findAccountButton';
+	button.textContent = 'Submit';
 
-	}
-	xhr.send();
-}
+	findAccountForm.appendChild(accId);
+	findAccountForm.appendChild(button);
+	main.appendChild(findAccountForm);
+
+};
+
 function displayError(msg) {
-	var dataDiv = document.getElementById('filmData');
-	dataDiv.textContent = msg;
-}
-function displayFilm(film) {
-	var dataDiv = document.getElementById('filmData');
-	dataDiv.textContent = '';
-	let actorDiv = document.getElementById('actorData');
-	// TODO:
-	// * Create and append elements to the data div to display:
-	// * Film title (h1) and description (blockquote).
-	let h1 = document.createElement('h1');
-	h1.textContent = film.title;
-	dataDiv.appendChild(h1);
-	let desc = document.createElement('blockquote');
-	desc.textContent = film.description;
-	dataDiv.appendChild(desc);
-
-	// * Rating, release year, and length as an unordered list.
-	//TODO 
-	let ul = document.createElement('ul');
-	let li = document.createElement('li');
-	li.textContent = "Rating: " + film.rating;
-	let li2 = document.createElement('li');
-	li2.textContent = "Release Year: " + film.releaseYear;
-	let li3 = document.createElement('li');
-	li3.textContent = "Length: " + film.length;
-	ul.appendChild(li);
-	ul.appendChild(li2);
-	ul.appendChild(li3);
-	dataDiv.appendChild(ul);
-	getActorsByFilmId(film.id);
-
-}
-function displayActors(actors) {
-	var actorDiv = document.getElementById('actorData');
-	actorDiv.textContent = '';
-	// TODO:
-	// * Create and append elements to the data div to display:
-	// * Film title (h1) and description (blockquote).
-	let h1 = document.createElement('h1');
-	h1.textContent = 'Actors: ';
-	actorDiv.appendChild(h1);
-	// * First Name, Last Name, and Id as an unordered list.
-	//TODO 
-	let ul = document.createElement('ul');
-	for (let actor of actors) {
-		let li = document.createElement('li');
-		li.textContent = "Full name: " + actor.firstName + ' ' + actor.lastName + ", Id number: " + actor.id;
-		ul.appendChild(li);
-	}
-
-	actorDiv.appendChild(ul);
-
+	var main = document.getElementById('main');
+	main.textContent = msg;
 }
 
-function createFilm(newFilm) {
-	console.log(newFilm);
-	let xhr = new XMLHttpRequest();
-	xhr.open('POST', 'api/films');
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 201 || xhr.status === 200) {
-				let film = JSON.parse(xhr.responseText);
-				console.log(xhr.getResponseHeader('Location'));
-				console.log(film);
-				displayFilm(film);
-			} else {
-				console.error('Film create failed with status: ' + xhr.status);
-			}
-		}
-	};
-	xhr.setRequestHeader('Content-type', 'application/json');
-	xhr.send(JSON.stringify(newFilm));
 
-}

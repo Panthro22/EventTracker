@@ -103,7 +103,7 @@ public class User {
 		this.role = role;
 	}
 
-	public int isEnabled() {
+	public int getEnabled() {
 		return enabled;
 	}
 
