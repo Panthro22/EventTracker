@@ -47,7 +47,7 @@ function getUser(userId) {
 				let user = JSON.parse(xhr.responseText);
 				displayUser(user);
 			}
-			else if (xhr.status === 404) {
+			else if (xhr.status === 500) {
 				displayError("User: " + userId + " was not found");
 			}
 			else {
@@ -127,7 +127,8 @@ function updateUser(user) {
 			email: user.email.value,
 			role: user.role.value,
 			enabled: user.enabled.value
-		}
+		}; 
+		
 		updateUserData(updatedUser);
 	});
 }
@@ -140,15 +141,13 @@ function updateUserData(newUser) {
 		if (xhr.readyState === 4) {
 			if (xhr.status === 201 || xhr.status === 200) {
 				let user = JSON.parse(xhr.responseText);
-				console.log(xhr.getResponseHeader('Location'));
-				console.log(user);
 				displayUser(user);
 			} else {
 				displayError('User update failed with status: ' + xhr.status);
 			}
 		}
 	};
-	xhr.setRequestHeader('Content-type', 'application/json');
+
 	xhr.send(JSON.stringify(newUser));
 }
 
@@ -211,7 +210,6 @@ function registerAccount() {
 
 };
 function createNewUser(newUser) {
-	console.log(newUser);
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', 'api/users');
 	xhr.onreadystatechange = function() {
@@ -219,7 +217,6 @@ function createNewUser(newUser) {
 			if (xhr.status === 201 || xhr.status === 200) {
 				let user = JSON.parse(xhr.responseText);
 				console.log(xhr.getResponseHeader('Location'));
-				console.log(user);
 				displayUser(user);
 			} else {
 				console.error('User create failed with status: ' + xhr.status);
@@ -316,6 +313,7 @@ function displayUser(user) {
 	main.appendChild(deleteUserForm);
 
 	document.body.appendChild(main);
+	
 	document.editUserForm.userEdit.addEventListener('click', function(event) {
 		event.preventDefault();
 		updateUser(user);

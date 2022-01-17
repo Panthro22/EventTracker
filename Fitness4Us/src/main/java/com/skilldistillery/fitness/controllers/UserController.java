@@ -31,7 +31,7 @@ public class UserController {
 		return userSvc.getUserById(userId);
 	}
 	@PutMapping("users")
-	public User updateUser(@RequestBody User user) {
+	public User updatedUser(@RequestBody User user) {
 		return userSvc.updateUserById(user);			
 	}
 	@PostMapping("users")
