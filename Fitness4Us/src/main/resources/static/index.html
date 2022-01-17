@@ -22,33 +22,84 @@
 	</div>
 	<h1>Fitness 4 Us</h1>
 	<h3>Track your Health</h3>
-	<main id = 'main'>Main<br>
+	<main id='main'>
+		Main<br>
 	</main>
-	
-	<div id = "userDiv">User Info<br>
+
+	<div id="userDiv">
+		User Info<br>
 		<form>
-		<input id ="" type="text" placeholder="" required>
-		<button id = "userAdd">Register User</button>
+			<input id="fname" type="text" placeholder="First Name" required>
+			<input id="lname" type="text" placeholder="Last Name" required>
+			<input id="email" type="text" placeholder="Email" required><br>
+			<input id="username" type="text" placeholder="Username" required>
+			<input id="password" type="text" placeholder="Password" required>
+			<input id="role" type="text" placeholder="Role" required> <input
+				id="enabled" type="hidden" placeholder="Enabled" required>
+			<button id="userAdd">Register User</button>
+		</form>
+	</div><br>
+	<div id="logDiv">
+		Daily Log<br>
+		<form>
+			<input id="timeRecorded" type="text" placeholder="Date Time" required>
+			<input id="userId" type="text" placeholder="user Id" required>
+			<button id="logAdd">Add Log</button>
+		</form>
+	</div><br>
+
+	<div id="workoutDiv">
+		Work out Log <br>
+		<form>
+			<input id="startTime" type="text" placeholder="start in Date Time"
+				required> <input id="endTime" type="text"
+				placeholder="end  in Date Time" required> <input id="logId"
+				type="text" placeholder="Log Id" required><br>
+			<button id="workoutAdd">Add Work out</button>
+		</form><br>
+		<div id="WeightTrainingDiv">Weight Training
+		<form>
+			<input id="wname" type="text" placeholder="Exercise Name" required>
+			<input id="repetitions" type="text" placeholder="Repetitions"
+				required> <input id="sets" type="text" placeholder="Sets"
+				required><br> <input id="weight" type="text"
+				placeholder="weight amount" required> <input id="wScale"
+				type="text" placeholder="Scale for weights" required> <input
+				id="wWorkoutId" type="text" placeholder="Work out Id" required>
+			<input id="weightExercise" type="text"
+				placeholder="Weight Exercise Id" required>
+			<button id="weightTrainingAdd">Add Weight Training</button>
+		</form>
+		</div><br>
+		<div id="CardioTrainingDiv">Cardio Training
+		<form>
+			<input id="cname" type="text" placeholder="Exercise Name" required>
+			<input id="distance" type="text" placeholder="Distance" required>
+			<input id="cScale" type="text" placeholder="Scale" required><br>
+			<input id="cWorkoutId" type="text" placeholder="Workout Id" required>
+			<input id="cardioExercise" type="text"
+				placeholder="Cardio Exercise Id" required>
+
+			<button id="cardioTrainingAdd">Add Cardio Training</button>
+		</form>
+		</div>
+	</div><br>
+
+	<div id="weightLifingExerciseDiv">
+		Weight Lifting Exercises<br>
+		<form>
+			<input id="wleName" type="text" placeholder="Exercise Name" required>
+			<button id="weightAdd">Add Weight Lifting Excercise</button>
+		</form>
+	</div><br>
+
+	<div id="cardioExerciseDiv">
+		Cardio Exercises <br>
+		<form>
+			<input id="ceName" type="text" placeholder="Exercise Name" required>
+			<button id="cardioAdd">Add Cardio Exercise</button>
 		</form>
 	</div>
-	<div id = "logDiv">Daily Log<br>
-	
-		<button id = "logAdd">Add Log</button>
-	</div>
-	
-	<div id = "workoutDiv">Work out Log <br>
-		<button id="workoutAdd"> Add Workout</button>
-		<div id = "WeightTrainingDiv">Weight Training</div>
-		<div id = "CardioTrainingDiv">Cardio Training</div>
-	</div>
-	
-	<div id = "weightLifingExerciseDiv">Weight Lifting Exercises<br>
-		<button id="weightAdd"> Add Weight Lifting Excercise</button>
-	</div>
-	
-	<div id = "cardioExerciseDiv">Cardio Exercises <br>
-	<button id="cardioAdd"> Add Cardio Exercise</button>
-	</div>
-<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
