@@ -28,7 +28,7 @@
 
 	<div id="userDiv">
 		User Info<br>
-		<form>
+		Register User:<form id="userAddForm">
 			<input id="fname" type="text" placeholder="First Name" required>
 			<input id="lname" type="text" placeholder="Last Name" required>
 			<input id="email" type="text" placeholder="Email" required><br>
@@ -37,61 +37,96 @@
 			<input id="role" type="text" placeholder="Role" required> <input
 				id="enabled" type="hidden" placeholder="Enabled" required>
 			<button id="userAdd">Register User</button>
+		</form><br>
+		Update User:<form id="updateUserForm">
+			<input id="userId" type="text" placeholder="User id" required>
+			<input id="fname" type="text" placeholder="First Name" required>
+			<input id="lname" type="text" placeholder="Last Name" required>
+			<input id="email" type="text" placeholder="Email" required><br>
+			<input id="username" type="text" placeholder="Username" required>
+			<input id="password" type="text" placeholder="Password" required>
+			<input id="role" type="hidden" placeholder="basic" required> <input
+				id="enabled" type="hidden" placeholder="Enabled" required>
+			<button id="userUpdate">update User</button>
+		</form><br>
+		Delete User<form id="deleteUser">
+			User Id:<input id="userId" type="text" placeholder="User id" required>
+			<button id="userDelete">delete User</button>
 		</form>
-	</div><br>
+		<table id="userDisplay">
+			<thead>
+			<tr>
+				<th>Full Name</th>
+				<th>User Name</th>
+				<th>Email </th>
+				<th>Subscription</th>
+			</tr>
+			</thead>
+			<tbody id="userTableBody">
+			</tbody>
+		</table>
+	</div>
+	<br>
 	<div id="logDiv">
 		Daily Log<br>
-		<form>
+		<form id="logAddForm">
 			<input id="timeRecorded" type="text" placeholder="Date Time" required>
 			<input id="userId" type="text" placeholder="user Id" required>
 			<button id="logAdd">Add Log</button>
 		</form>
-	</div><br>
+	</div>
+	<br>
 
 	<div id="workoutDiv">
 		Work out Log <br>
-		<form>
+		<form id="workoutAddForm">
 			<input id="startTime" type="text" placeholder="start in Date Time"
 				required> <input id="endTime" type="text"
 				placeholder="end  in Date Time" required> <input id="logId"
 				type="text" placeholder="Log Id" required><br>
 			<button id="workoutAdd">Add Work out</button>
-		</form><br>
-		<div id="WeightTrainingDiv">Weight Training
-		<form>
-			<input id="wname" type="text" placeholder="Exercise Name" required>
-			<input id="repetitions" type="text" placeholder="Repetitions"
-				required> <input id="sets" type="text" placeholder="Sets"
-				required><br> <input id="weight" type="text"
-				placeholder="weight amount" required> <input id="wScale"
-				type="text" placeholder="Scale for weights" required> <input
-				id="wWorkoutId" type="text" placeholder="Work out Id" required>
-			<input id="weightExercise" type="text"
-				placeholder="Weight Exercise Id" required>
-			<button id="weightTrainingAdd">Add Weight Training</button>
 		</form>
-		</div><br>
-		<div id="CardioTrainingDiv">Cardio Training
-		<form>
-			<input id="cname" type="text" placeholder="Exercise Name" required>
-			<input id="distance" type="text" placeholder="Distance" required>
-			<input id="cScale" type="text" placeholder="Scale" required><br>
-			<input id="cWorkoutId" type="text" placeholder="Workout Id" required>
-			<input id="cardioExercise" type="text"
-				placeholder="Cardio Exercise Id" required>
-
-			<button id="cardioTrainingAdd">Add Cardio Training</button>
-		</form>
+		<br>
+		<div id="WeightTrainingDiv">
+			Weight Training
+			<form id="weightTrainAddForm">
+				<input id="wname" type="text" placeholder="Exercise Name" required>
+				<input id="repetitions" type="text" placeholder="Repetitions"
+					required> <input id="sets" type="text" placeholder="Sets"
+					required><br> <input id="weight" type="text"
+					placeholder="weight amount" required> <input id="wScale"
+					type="text" placeholder="Scale for weights" required> <input
+					id="wWorkoutId" type="text" placeholder="Work out Id" required>
+				<input id="weightExercise" type="text"
+					placeholder="Weight Exercise Id" required>
+				<button id="weightTrainingAdd">Add Weight Training</button>
+			</form>
 		</div>
-	</div><br>
+		<br>
+		<div id="CardioTrainingDiv">
+			Cardio Training
+			<form id="cardioExerciseAddForm">
+				<input id="cname" type="text" placeholder="Exercise Name" required>
+				<input id="distance" type="text" placeholder="Distance" required>
+				<input id="cScale" type="text" placeholder="Scale" required><br>
+				<input id="cWorkoutId" type="text" placeholder="Workout Id" required>
+				<input id="cardioExercise" type="text"
+					placeholder="Cardio Exercise Id" required>
+
+				<button id="cardioTrainingAdd">Add Cardio Training</button>
+			</form>
+		</div>
+	</div>
+	<br>
 
 	<div id="weightLifingExerciseDiv">
 		Weight Lifting Exercises<br>
 		<form>
 			<input id="wleName" type="text" placeholder="Exercise Name" required>
-			<button id="weightAdd">Add Weight Lifting Excercise</button>
+			<button id="weightAdd">Add Weight Lifting Exercise</button>
 		</form>
-	</div><br>
+	</div>
+	<br>
 
 	<div id="cardioExerciseDiv">
 		Cardio Exercises <br>
