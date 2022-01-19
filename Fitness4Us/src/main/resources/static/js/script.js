@@ -122,11 +122,22 @@ function init() {
 	deleteUser = document.getElementById("deleteUser");
 	deleteUser.addEventListener('click', function(e) {
 		e.preventDefault();
-		var deleteU = deleteUser.value;
-		console.log("event delete user: " + deleteU);
-		if (deleteU != null) {
+		var updateForm = document.getElementById('updateUserForm');
+			let user = {
+			id: updateForm.userId.value,
+			firstName: updateForm.fname.value,
+			lastName: updateForm.lname.value,
+			username: updateForm.username.value,
+			password: updateForm.password.value,
+			email: updateForm.email.value,
+			role: updateForm.role.value,
+			enabled: updateForm.enabled.value,
+			
+		}
+		console.log("event delete user: " + user);
+		if (user != null) {
 		
-			deleteUserInDB(deleteU);
+			deleteUserInDB(user);
 		} else {
 			console.log("No user Id entered");
 		}
@@ -251,17 +262,8 @@ function clickedOn(e) {
 	updateForm.password.value = childs[5].textContent;
 	updateForm.role.value = childs[6].textContent;
 	updateForm.enabled.value = childs[7].textContent;
-	let user = {
-			id: childs[0].textContent,
-			firstName: childs[1].textContent,
-			lastName: childs[2].textContent,
-			username: childs[4].textContent,
-			password: childs[5].textContent,
-			email: childs[3].textContent,
-			role: childs[6].textContent,
-			enabled: childs[7].textContent,
-			dailyLogEntries: []
-		}
+
+		console.log(user);
 	let deleteUserButton = document.getElementById('deleteUser');
 	deleteUserButton.value = user;
 	console.log("delete user: "+ deleteUserButton.value);
@@ -901,7 +903,23 @@ function getCardioExerciseByIdNoDisplay(cardioExId) {
 	}
 	xhr.send();
 }
-
+function updateUserInDB(editedUser){
+	console.log(editedUser);
+	let xhr = new XMLHttpRequest();
+	xhr.open('DELETE', 'api/users');
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === 4){
+			if(xhr.status === 201 || xhr.status === 200){
+				displayUsers();
+			} else{
+				console.error('user update failed with status: '+ xhr.status);
+			}
+		}
+	};
+	xhr.setRequestHeader('Content-type','application/json');
+	xhr.send(JSON.stringify(editedUser));
+	
+}
 function deleteUserInDB(deleteUser) {
 	console.log(deleteUser);
 	let xhr = new XMLHttpRequest();
@@ -909,10 +927,7 @@ function deleteUserInDB(deleteUser) {
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState === 4){
 			if(xhr.status === 201 || xhr.status === 200){
-				let film = JSON.parse(xhr.responseText);
-				console.log(xhr.getResponseHeader('Location'));
-				console.log(film);
-				displayFilm(film);
+				displayUsers();
 			} else{
 				console.error('user delete failed with status: '+ xhr.status);
 			}
