@@ -142,6 +142,30 @@ function init() {
 			console.log("No user Id entered");
 		}
 	});
+	
+	updateUser = document.getElementById("userUpdate");
+	updateUser.addEventListener('click', function(e) {
+		e.preventDefault();
+		var updateForm = document.getElementById('updateUserForm');
+			let user = {
+			id: updateForm.userId.value,
+			firstName: updateForm.fname.value,
+			lastName: updateForm.lname.value,
+			username: updateForm.username.value,
+			password: updateForm.password.value,
+			email: updateForm.email.value,
+			role: updateForm.role.value,
+			enabled: updateForm.enabled.value,
+			
+		}
+		console.log("event update user: " + user);
+		if (user != null) {
+		
+			updateUserInDB(user);
+		} else {
+			console.log("No user entered");
+		}
+	});
 
 function getUsers() {
 	let xhr = new XMLHttpRequest();
@@ -253,20 +277,14 @@ function clickedOn(e) {
 	let target = e.target;
 	let parent = target.parentElement;
 	let childs = parent.getElementsByTagName('td');
-	console.log(childs[0].textContent);
 	updateForm.userId.value = childs[0].textContent;
 	updateForm.fname.value = childs[1].textContent;
 	updateForm.lname.value = childs[2].textContent;
-	updateForm.email.value = childs[3].textContent;
-	updateForm.username.value = childs[4].textContent;
-	updateForm.password.value = childs[5].textContent;
+	updateForm.username.value = childs[3].textContent;
+	updateForm.password.value = childs[4].textContent;
+	updateForm.email.value = childs[5].textContent;
 	updateForm.role.value = childs[6].textContent;
 	updateForm.enabled.value = childs[7].textContent;
-
-		console.log(user);
-	let deleteUserButton = document.getElementById('deleteUser');
-	deleteUserButton.value = user;
-	console.log("delete user: "+ deleteUserButton.value);
 
 };
 function displayLogs(logs) {
@@ -906,7 +924,7 @@ function getCardioExerciseByIdNoDisplay(cardioExId) {
 function updateUserInDB(editedUser){
 	console.log(editedUser);
 	let xhr = new XMLHttpRequest();
-	xhr.open('DELETE', 'api/users');
+	xhr.open('POST', 'api/users');
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState === 4){
 			if(xhr.status === 201 || xhr.status === 200){
@@ -921,7 +939,6 @@ function updateUserInDB(editedUser){
 	
 }
 function deleteUserInDB(deleteUser) {
-	console.log(deleteUser);
 	let xhr = new XMLHttpRequest();
 	xhr.open('DELETE', 'api/users');
 	xhr.onreadystatechange = function(){
@@ -941,4 +958,20 @@ function displayError(msg){
 	p.textContent = msg;
 	var main = document.getElementById('main');
 	main.appendChild(p);
+}
+
+function updateUserInDB(user){
+	let xhr = new XMLHttpRequest();
+	xhr.open('PUT', 'api/users');
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState === 4){
+			if(xhr.status === 201 || xhr.status === 200){
+				displayUsers();
+			} else{
+				console.error('user delete failed with status: '+ xhr.status);
+			}
+		}
+	};
+	xhr.setRequestHeader('Content-type','application/json');
+	xhr.send(JSON.stringify(user));
 }
