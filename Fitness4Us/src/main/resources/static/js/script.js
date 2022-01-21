@@ -104,68 +104,67 @@ function init() {
 		createNewCardioTrain(newCardioTrain);
 	});
 
-	
-	
+
+
 	findUser = document.getElementById('userFind');
-	findUser.addEventListener('click', function(e){
+	findUser.addEventListener('click', function(e) {
 		e.preventDefault();
-		var target = e.target;
-		var parent = target.parentElement;
-		var user = getUserIdNoDisplay(parent.userId.value);
-		console.log("value: " + parent.userId.value);
-		console.log(user.firstName);
-		  
-		
+		let target = e.target;
+		let parent = target.parentElement;
+		let user = getUserIdNoDisplay(parent.userId.value);
+		console.log(user.firstName.value);
+
+
 	});
 
 }
-	deleteUser = document.getElementById("deleteUser");
-	deleteUser.addEventListener('click', function(e) {
-		e.preventDefault();
-		var updateForm = document.getElementById('updateUserForm');
-			let user = {
-			id: updateForm.userId.value,
-			firstName: updateForm.fname.value,
-			lastName: updateForm.lname.value,
-			username: updateForm.username.value,
-			password: updateForm.password.value,
-			email: updateForm.email.value,
-			role: updateForm.role.value,
-			enabled: updateForm.enabled.value,
-			
-		}
-		console.log("event delete user: " + user);
-		if (user != null) {
-		
-			deleteUserInDB(user);
-		} else {
-			console.log("No user Id entered");
-		}
-	});
-	
-	updateUser = document.getElementById("userUpdate");
-	updateUser.addEventListener('click', function(e) {
-		e.preventDefault();
-		var updateForm = document.getElementById('updateUserForm');
-			let user = {
-			id: updateForm.userId.value,
-			firstName: updateForm.fname.value,
-			lastName: updateForm.lname.value,
-			username: updateForm.username.value,
-			password: updateForm.password.value,
-			email: updateForm.email.value,
-			role: updateForm.role.value,
-			enabled: updateForm.enabled.value,
-			
-		}
-		console.log("event update user: " + user);
-		if (user != null) {
-		
-			updateUserInDB(user);
-		} else {
-			console.log("No user entered");
-		}
-	});
+deleteUser = document.getElementById("deleteUser");
+deleteUser.addEventListener('click', function(e) {
+	e.preventDefault();
+	var updateForm = document.getElementById('updateUserForm');
+	let user = {
+		id: updateForm.userId.value,
+		firstName: updateForm.fname.value,
+		lastName: updateForm.lname.value,
+		username: updateForm.username.value,
+		password: updateForm.password.value,
+		email: updateForm.email.value,
+		role: updateForm.role.value,
+		enabled: updateForm.enabled.value,
+
+	}
+	console.log("event delete user: " + user);
+	if (user != null) {
+
+		deleteUserInDB(user);
+	} else {
+		console.log("No user Id entered");
+	}
+});
+
+updateUser = document.getElementById("userUpdate");
+updateUser.addEventListener('click', function(e) {
+	e.preventDefault();
+	var updateForm = document.getElementById('updateUserForm');
+	let user = {
+		id: updateForm.userId.value,
+		firstName: updateForm.fname.value,
+		lastName: updateForm.lname.value,
+		username: updateForm.username.value,
+		password: updateForm.password.value,
+		email: updateForm.email.value,
+		role: updateForm.role.value,
+		enabled: updateForm.enabled.value,
+
+	}
+	console.log("event update user: " + user);
+	if (user != null) {
+
+		updateUserInDB(user);
+	} else {
+		console.log("No user entered");
+	}
+});
 
 function getUsers() {
 	let xhr = new XMLHttpRequest();
@@ -197,7 +196,7 @@ function getUsers() {
 
 function displayUsers(users) {
 	let body = document.getElementById('userTableBody');
-		
+
 	for (user of users) {
 		let bodyRow = document.createElement('tr');
 		bodyRow.className = 'userRow';
@@ -231,17 +230,17 @@ function displayUsers(users) {
 
 
 		body.appendChild(bodyRow);
-	
+
 
 	}
 	var userTbodyRows = document.getElementById('userTableBody').getElementsByTagName("tr");
 	console.log("How many rows of user in table: " + userTbodyRows.length)
 	var userColData = userTbodyRows[0].childNodes;
 	console.log("row 0 information: " + userColData[0].textContent);
-	for(let i = 0; i < userTbodyRows.length;i++){
-		userTbodyRows[i].addEventListener('click',clickedOn);
+	for (let i = 0; i < userTbodyRows.length; i++) {
+		userTbodyRows[i].addEventListener('click', clickedOn);
 	}
-	
+
 
 }
 
@@ -761,14 +760,15 @@ function getUserIdNoDisplay(userId) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('GET', 'api/users/' + userId);
 	xhr.onreadystatechange = function() {
-		
+
 		if (xhr.readyState === 4) {
-			
+
 			if (xhr.status === 200 || xhr.status === 201) {
 				let user = JSON.parse(xhr.responseText);
+				displayUser(user);
 				return user;
-			}else{
-			console.log('Did not retrieve a of user.')
+			} else {
+				console.log('Did not retrieve a of user.')
 			}
 		}
 		else if (xhr.status === 500) {
@@ -921,57 +921,140 @@ function getCardioExerciseByIdNoDisplay(cardioExId) {
 	}
 	xhr.send();
 }
-function updateUserInDB(editedUser){
+function updateUserInDB(editedUser) {
 	console.log(editedUser);
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', 'api/users');
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState === 4){
-			if(xhr.status === 201 || xhr.status === 200){
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 201 || xhr.status === 200) {
 				displayUsers();
-			} else{
-				console.error('user update failed with status: '+ xhr.status);
+			} else {
+				console.error('user update failed with status: ' + xhr.status);
 			}
 		}
 	};
-	xhr.setRequestHeader('Content-type','application/json');
+	xhr.setRequestHeader('Content-type', 'application/json');
 	xhr.send(JSON.stringify(editedUser));
-	
+
 }
 function deleteUserInDB(deleteUser) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('DELETE', 'api/users');
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState === 4){
-			if(xhr.status === 201 || xhr.status === 200){
-				displayUsers();
-			} else{
-				console.error('user delete failed with status: '+ xhr.status);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 201 || xhr.status === 200) {
+				refreshUsersTable();
+				getUsers();
+			} else {
+				console.error('user delete failed with status: ' + xhr.status);
 			}
 		}
 	};
-	xhr.setRequestHeader('Content-type','application/json');
+	xhr.setRequestHeader('Content-type', 'application/json');
 	xhr.send(JSON.stringify(deleteUser));
 }
-function displayError(msg){
+function displayError(msg) {
 	var p = document.createElement('p');
 	p.textContent = msg;
 	var main = document.getElementById('main');
 	main.appendChild(p);
 }
 
-function updateUserInDB(user){
+function updateUserInDB(user) {
 	let xhr = new XMLHttpRequest();
 	xhr.open('PUT', 'api/users');
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState === 4){
-			if(xhr.status === 201 || xhr.status === 200){
-				displayUsers();
-			} else{
-				console.error('user delete failed with status: '+ xhr.status);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 201 || xhr.status === 200) {
+				refreshUsersTable();
+				getUsers();
+			} else {
+				console.error('user delete failed with status: ' + xhr.status);
 			}
 		}
 	};
-	xhr.setRequestHeader('Content-type','application/json');
+	xhr.setRequestHeader('Content-type', 'application/json');
 	xhr.send(JSON.stringify(user));
+}
+function displayUser(user) {
+	let findUserForm = document.getElementById('findUser');
+	let table = document.createElement('table');
+	let title = document.createElement('title');
+	let tr = document.createElement('tr');
+	let th = document.createElement('th');
+	th.textContent = 'Id';
+	let th1 = document.createElement('th');
+	th1.textContent = 'First Name';
+	let th2 = document.createElement('th');
+	th2.textContent = 'Last Name';
+	let th3 = document.createElement('th');
+	th3.textContent = 'User Name';
+	let th4 = document.createElement('th');
+	th4.textContent = 'Password';
+	let th5 = document.createElement('th');
+	th5.textContent = 'Email';
+	let th6 = document.createElement('th');
+	th6.textContent = 'Subsccription';
+	let th7 = document.createElement('th');
+	th7.textContent = 'Enabled';
+	
+	
+	tr.appendChild(th);
+	tr.appendChild(th1);
+	tr.appendChild(th2);
+	tr.appendChild(th3);
+	tr.appendChild(th4);
+	tr.appendChild(th5);
+	tr.appendChild(th6);
+	tr.appendChild(th7);
+	title.appendChild(tr);
+	table.appendChild(title);
+
+	let body = document.createElement('tbody');
+
+	let bodyRow = document.createElement('tr');
+	bodyRow.className = 'FoundUserRow';
+	let bodyCol = document.createElement('td');
+	let bodyCol1 = document.createElement('td');
+	let bodyCol2 = document.createElement('td');
+	let bodyCol3 = document.createElement('td');
+	let bodyCol4 = document.createElement('td');
+	let bodyCol5 = document.createElement('td');
+	let bodyCol6 = document.createElement('td');
+	let bodyCol7 = document.createElement('td');
+
+	bodyCol.textContent = user.id;
+	bodyCol1.textContent = user.firstName;
+	bodyCol2.textContent = user.lastName;
+	bodyCol3.textContent = user.username;
+	bodyCol4.textContent = user.password;
+	bodyCol5.textContent = user.email;
+	bodyCol6.textContent = user.role;
+	bodyCol7.textContent = user.enabled;
+
+
+	bodyRow.appendChild(bodyCol);
+	bodyRow.appendChild(bodyCol1);
+	bodyRow.appendChild(bodyCol2);
+	bodyRow.appendChild(bodyCol3);
+	bodyRow.appendChild(bodyCol4);
+	bodyRow.appendChild(bodyCol5);
+	bodyRow.appendChild(bodyCol6);
+	bodyRow.appendChild(bodyCol7);
+
+
+	body.appendChild(bodyRow);
+	table.appendChild(body);
+	findUserForm.appendChild(table);
+}
+
+function refreshUsersTable(){
+	let body = document.getElementById('userTableBody');
+	let tr = document.getElementsByClassName('userRow');
+	console.log('Refresh count of rows: '+tr.length);
+	let count = tr.length;
+	for(let i = 0; i < count; i++){
+		body.removeChild(tr[0]);
+	}
 }
