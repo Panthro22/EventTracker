@@ -74,9 +74,13 @@
 	<br>
 	<div id="logDiv">
 		Daily Log<br>
+		Find User<form id="findLog">
+			Log Id:<input id="logId" type="text" placeholder="User id" required>
+			<button id=logFind>Find Log</button>
+		</form>
 		<form id="logAddForm">
-			<input id="timeRecorded" type="text" placeholder="Date Time" required>
-			<input id="userId" type="text" placeholder="user Id" required>
+			Date:<input id="timeRecorded" type="text" placeholder="Date Time" required>
+			User Id:<input id="userId" type="text" placeholder="user Id" required>
 			<button id="logAdd">Add Log</button>
 		</form>
 	</div>

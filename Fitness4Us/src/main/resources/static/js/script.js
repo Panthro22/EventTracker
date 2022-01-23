@@ -111,8 +111,18 @@ function init() {
 		e.preventDefault();
 		let target = e.target;
 		let parent = target.parentElement;
-		let user = getUserIdNoDisplay(parent.userId.value);
-		console.log(user.firstName.value);
+		getUserIdNoDisplay(parent.userId.value);
+
+
+
+	});
+	findLog = document.getElementById('logFind');
+	findLog.addEventListener('click', function(e) {
+		e.preventDefault();
+		let target = e.target;
+		let parent = target.parentElement;
+		getLogIdNoDisplay(parent.logId.value);
+
 
 
 	});
@@ -804,11 +814,13 @@ function getLogIdNoDisplay(logId) {
 	xhr.open('GET', 'api/logs/' + logId);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
+			if (xhr.status === 200 || xhr.status === 201) {
 				let log = JSON.parse(xhr.responseText);
+				displayLog(log);
 				return log;
-			}
+			}else{
 			console.log('Did not retrieve a list of users.')
+			}
 		}
 		else if (xhr.status === 500) {
 			console.log("User: " + logId + " was not found");
@@ -1038,7 +1050,7 @@ function displayUser(user) {
 	bodyRow.appendChild(bodyCol1);
 	bodyRow.appendChild(bodyCol2);
 	bodyRow.appendChild(bodyCol3);
-	bodyRow.appendChild(bodyCol4);
+	bodyRow.appendChild(bodyCol4)	;
 	bodyRow.appendChild(bodyCol5);
 	bodyRow.appendChild(bodyCol6);
 	bodyRow.appendChild(bodyCol7);
@@ -1057,4 +1069,47 @@ function refreshUsersTable(){
 	for(let i = 0; i < count; i++){
 		body.removeChild(tr[0]);
 	}
+}
+
+function displayLog(log){
+	let findLogForm = document.getElementById('findLog');
+	let table = document.createElement('table');
+	let title = document.createElement('title');
+	let tr = document.createElement('tr');
+	let th = document.createElement('th');
+	th.textContent = 'Log Id';
+	let th1 = document.createElement('th');
+	th.textContent = 'Date';
+
+
+
+	
+	
+	tr.appendChild(th);
+	tr.appendChild(th1);
+
+
+
+	title.appendChild(tr);
+	table.appendChild(title);
+
+	let body = document.createElement('tbody');
+
+	let bodyRow = document.createElement('tr');
+	bodyRow.className = 'FoundLogRow';
+	let bodyCol = document.createElement('td');
+	let bodyCol1 = document.createElement('td');
+
+
+	bodyCol.textContent = log.id;
+	bodyCol1.textContent = log.date;
+
+
+	bodyRow.appendChild(bodyCol);
+	bodyRow.appendChild(bodyCol1);
+
+
+	body.appendChild(bodyRow);
+	table.appendChild(body);
+	findLogForm.appendChild(table);
 }
