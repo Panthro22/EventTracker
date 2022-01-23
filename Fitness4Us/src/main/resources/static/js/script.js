@@ -123,11 +123,13 @@ function init() {
 		let parent = target.parentElement;
 		getLogIdNoDisplay(parent.logId.value);
 
-
-
 	});
+	
+	
 
 }
+
+
 deleteUser = document.getElementById("deleteUser");
 deleteUser.addEventListener('click', function(e) {
 	e.preventDefault();
@@ -597,6 +599,8 @@ function displayWeightTrainings(trainings) {
 	titleHeader5.textContent = 'Weight';
 	let titleHeader6 = document.createElement('th');
 	titleHeader6.textContent = 'Scale';
+	let titleHeader7 = document.createElement('th');
+	titleHeader7.textContent = 'total Weight lifted';
 
 	titleRow.appendChild(titleHeader);
 	titleRow.appendChild(titleHeader2);
@@ -619,6 +623,7 @@ function displayWeightTrainings(trainings) {
 		let bodyCol4 = document.createElement('td');
 		let bodyCol5 = document.createElement('td');
 		let bodyCol6 = document.createElement('td');
+		let bodyCol7 = document.createElement('td');
 
 
 
@@ -628,6 +633,7 @@ function displayWeightTrainings(trainings) {
 		bodyCol4.textContent = training.sets;
 		bodyCol5.textContent = training.weight;
 		bodyCol6.textContent = training.scale;
+		bodyCol7.textContent = (training.repetitions * training.sets * training.weight)+' '+training.scale;
 
 		bodyRow.appendChild(bodyCol);
 		bodyRow.appendChild(bodyCol2);
@@ -635,6 +641,7 @@ function displayWeightTrainings(trainings) {
 		bodyRow.appendChild(bodyCol4);
 		bodyRow.appendChild(bodyCol5);
 		bodyRow.appendChild(bodyCol6);
+		bodyRow.appendChild(bodyCol7);
 
 
 
@@ -684,6 +691,8 @@ function displayCardioTrainings(trainings) {
 	titleHeader3.textContent = 'Distance';
 	let titleHeader4 = document.createElement('th');
 	titleHeader4.textContent = 'Scale';
+	let titleHeader5 = document.createElement('th');
+	titleHeader5.textContent = 'Distance per minute';
 
 
 	titleRow.appendChild(titleHeader);
@@ -704,6 +713,7 @@ function displayCardioTrainings(trainings) {
 		let bodyCol2 = document.createElement('td');
 		let bodyCol3 = document.createElement('td');
 		let bodyCol4 = document.createElement('td');
+		let bodyCol5 = document.createElement('td');
 
 
 
@@ -712,11 +722,19 @@ function displayCardioTrainings(trainings) {
 		bodyCol2.textContent = training.name;
 		bodyCol3.textContent = training.distance;
 		bodyCol4.textContent = training.scale;
+		if(training.scale === 'km'){
+		bodyCol5.textContent = training.distance*0.62137 +" mi";			
+		}
+		if(training.scale === 'mi'){
+		bodyCol5.textContent = training.distance*1.609344 +" km";			
+		}
+	
 
 		bodyRow.appendChild(bodyCol);
 		bodyRow.appendChild(bodyCol2);
 		bodyRow.appendChild(bodyCol3);
 		bodyRow.appendChild(bodyCol4);
+		bodyRow.appendChild(bodyCol5);
 
 
 
