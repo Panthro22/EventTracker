@@ -15,7 +15,6 @@ export class ImageService {
 
   constructor(
     private http: HttpClient,
-    private datePipe: DatePipe
   ) { }
 
   index(): Observable<Images[]>{

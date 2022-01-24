@@ -1,1 +1,33 @@
-<p>cardio-exercise works!</p>
+<input type="text" name="id" [(ngModel)]="newCardioExercise.id">
+<input type="text" name="name" [(ngModel)]="newCardioExercise.name">
+<input (click)="createCardioExcercise(newCardioExercise)" type="submit" ><br>
+
+<table *ngIf="!selectedCardioEx">
+  <thead>
+    <tr>
+      <td>id</td>
+      <td>name</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cardioEx of cardioExercises">
+      <td>{{cardioEx.id}}</td>
+      <td  (click) = "setCardioEx(cardioEx)">{{ cardioEx.name }}</td>
+      <td><button class="btn btn-danger" (click)="destroy(cardioEx)" >Delete</button></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<div *ngIf="selectedCardioEx">
+  <p>{{selectedCardioEx.id}}</p>
+  <p>{{selectedCardioEx.name | uppercase}}</p>
+  <button (click)="setEditCardioEx()">Edit</button>
+  <button (click)="selectedCardioEx = null">Back</button>
+</div>
+
+<div *ngIf="editCardioEx">
+  <input type="text" name="name" [(ngModel)]="editCardioEx.name">
+  <button (click)="updateCardioEx(editCardioEx)">Save</button>
+  <button (click)="editCardioEx = null;">Cancel</button>
+</div>

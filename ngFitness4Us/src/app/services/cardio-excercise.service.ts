@@ -16,15 +16,14 @@ export class CardioExcerciseService {
 
   constructor(
     private http: HttpClient,
-    private datePipe: DatePipe
   ) { }
 
   index(): Observable<CardioExcercise[]>{
-    return this.http.get<CardioExcercise[]>(this.url)
+    return this.http.get<CardioExcercise[]>(this.url + '?sorted=true')
     .pipe(
       catchError((err:any) => {
         console.log(err);
-        return throwError(() => new Error('TodoService.index(): error'));
+        return throwError(() => new Error('CardioExcercise.index(): error'));
       })
 
     );
@@ -35,17 +34,17 @@ export class CardioExcerciseService {
     .pipe(
       catchError((err:any) => {
         console.log(err);
-        return throwError(() =>new Error('TodoService.create(): error'));
+        return throwError(() =>new Error('CardioExcercise.create(): error'));
       })
 
     );
 
   }
-  show(weightExcerciseId: number): Observable<CardioExcercise>{
-    return this.http.get<CardioExcercise>( this.url+'/'+weightExcerciseId).pipe(
+  show(cardioExcerciseId: number): Observable<CardioExcercise>{
+    return this.http.get<CardioExcercise>( this.url+'/'+cardioExcerciseId).pipe(
     catchError((err: any) => {
       console.log(err);
-      return throwError(() =>new Error('TodoService.show(): error'));
+      return throwError(() =>new Error('CardioExcercise.show(): error'));
     }));
   }
   update(cardioExcercise: CardioExcercise): Observable<CardioExcercise>{
@@ -60,8 +59,8 @@ export class CardioExcerciseService {
     );
 
   }
-  destroy(cardioExcerciseId: number): Observable<void> {
-    return this.http.delete<void>(this.url+'/'+cardioExcerciseId).pipe(
+  destroy(cardioExcercise: CardioExcercise): Observable<void> {
+    return this.http.delete<void>(this.url).pipe(
       catchError((err:any) => {
         console.log(err);
         console.log('cardioExcerciseService.destroy(): error');

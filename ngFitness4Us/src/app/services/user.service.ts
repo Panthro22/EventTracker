@@ -14,7 +14,6 @@ export class UserService {
 
     constructor(
       private http: HttpClient,
-      private datePipe: DatePipe
     ) { }
 
     index(): Observable<User[]>{

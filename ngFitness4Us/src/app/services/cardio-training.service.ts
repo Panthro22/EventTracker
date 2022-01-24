@@ -15,7 +15,6 @@ export class CardioTrainingService {
 
   constructor(
     private http: HttpClient,
-    private datePipe: DatePipe
   ) { }
 
   index(): Observable<CardioTraining[]>{

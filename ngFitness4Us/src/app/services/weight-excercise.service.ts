@@ -13,9 +13,9 @@ export class WeightExcerciseService {
   private url = this.baseUrl+'api/weightexcercises';
 
   constructor(
-    private http: HttpClient,
-    private datePipe: DatePipe
-  ) { }
+    private http: HttpClient
+
+    ) { }
 
   index(): Observable<WeightExcercise[]>{
     return this.http.get<WeightExcercise[]>(this.url)

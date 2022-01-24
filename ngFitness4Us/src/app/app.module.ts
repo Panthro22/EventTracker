@@ -19,6 +19,7 @@ import { DailyLogEntrieService } from './services/daily-log-entrie.service';
 import { WorkoutService } from './services/workout.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,8 +33,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    NgbModule
+    FormsModule,
+    NgbModule,
+    HttpClientModule
   ],
   providers: [UserService, WeightExcerciseService, WeightTrainingService, CardioExcerciseService, CardioTrainingService,
               ImageService, VideoService, DailyLogEntrieService, WorkoutService],

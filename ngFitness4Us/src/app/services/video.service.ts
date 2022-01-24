@@ -15,7 +15,6 @@ export class VideoService {
 
   constructor(
     private http: HttpClient,
-    private datePipe: DatePipe
   ) { }
 
   index(): Observable<Video[]>{

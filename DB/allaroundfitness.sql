@@ -60,7 +60,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `workout` ;
 
 CREATE TABLE IF NOT EXISTS `workout` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `start_time` DATETIME NULL,
   `end_time` DATETIME NULL,
   `daily_log_entries_id` INT NULL,
@@ -80,7 +80,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `weight_excercise` ;
 
 CREATE TABLE IF NOT EXISTS `weight_excercise` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
@@ -93,10 +93,9 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `cardio_excercise` ;
 
 CREATE TABLE IF NOT EXISTS `cardio_excercise` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -162,7 +161,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `weight_training` ;
 
 CREATE TABLE IF NOT EXISTS `weight_training` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(55) NULL,
   `repetitions` INT NULL,
   `sets` INT NULL,
@@ -192,7 +191,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `cardio_training` ;
 
 CREATE TABLE IF NOT EXISTS `cardio_training` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `distance` DECIMAL(6,2) NULL,
   `scale` VARCHAR(3) NULL,

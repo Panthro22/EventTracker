@@ -15,7 +15,6 @@ export class WorkoutService {
 
   constructor(
     private http: HttpClient,
-    private datePipe: DatePipe
   ) { }
 
   index(): Observable<Workout[]>{
